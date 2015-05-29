@@ -12,4 +12,9 @@
 * Coding Tools
 	* [Eclipse](https://eclipse.org/downloads/ "eclipse")
 
+### Environment
+
+* Eclipse
+	* Workspace root: ../rsevil
+
 

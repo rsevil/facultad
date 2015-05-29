@@ -13,7 +13,6 @@ package Modelo;
 
 
 public class Carne extends Benefico {
-	private int puntaje;
 	public void calcularDano(Mamifero m) {
 	
 	}
