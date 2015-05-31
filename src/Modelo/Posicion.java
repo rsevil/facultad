@@ -1,19 +1,18 @@
 package Modelo;
 
 public class Posicion {
-	private int x;
-	private int y;
-	
-	public Posicion(int x, int y){
+	private float x;
+	private float y;
+	public Posicion(float x, float y) {
 		this.x = x;
 		this.y = y;
 	}
 	
-	public int obtenerX() {
-		return x;
+	public float obtenerX() {
+		return this.x;
 	}
 	
-	public int obtenerY() {
-		return y;
+	public float obtenerY() {
+		return this.y;
 	}
 }

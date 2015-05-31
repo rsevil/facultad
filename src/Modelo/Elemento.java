@@ -1,24 +1,28 @@
 package Modelo;
 
 public abstract class Elemento {
+	protected float puntaje;
 	protected Movimiento movimiento;
-	private Posicion posicion;
+	protected Posicion posicion;
 	
-	public Elemento(){
+	public Elemento(Movimiento movimiento, float puntaje) {
+		this.movimiento = movimiento;
+		this.puntaje = puntaje;
 		this.posicion = new Posicion(0,0);
 	}
 	
-	public void moverElemento(Dificultad dificultad) {
-		this.posicion = movimiento.calcularPosicion(posicion, dificultad);
+	public abstract float calcularPuntaje(Mamifero m);
+	
+	public abstract float calcularPuntaje(Ave a);
+	
+	public abstract float calcularPuntaje(Reptil r);
+	
+	public void moverElemento(float deltaTiempo, Dificultad dificultad) {
+		this.posicion = this.movimiento.calcularPosicion(deltaTiempo, this.posicion, dificultad);
 	}
 	
-	public void determinarMovimiento(Movimiento m) {
-		this.movimiento = m; 
+	public boolean ocupaCoordenadas(int x, int y) {
+		return this.posicion.obtenerX() == x 
+			&& this.posicion.obtenerY() == y;
 	}
-	
-	public abstract void calcularDano(Mamifero m);
-	
-	public abstract void calcularDano(Ave a);
-	
-	public abstract void calcularDano(Reptil r);
 }

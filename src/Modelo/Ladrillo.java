@@ -1,15 +1,19 @@
 package Modelo;
 
 public class Ladrillo extends Danino {
-	public void calcularDano(Mamifero m) {
-	
+	public Ladrillo(Movimiento movimiento, float puntaje){
+		super(movimiento,puntaje);
 	}
 	
-	public void calcularDano(Ave a) {
-	
+	public float calcularDano(Mamifero m) {
+		return super.puntaje*1.25f;
 	}
 	
-	public void calcularDano(Reptil r) {
+	public float calcularDano(Ave a) {
+		return super.puntaje;
+	}
 	
+	public float calcularDano(Reptil r) {
+		return super.puntaje*0.75f;
 	}
 }

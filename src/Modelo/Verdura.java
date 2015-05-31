@@ -1,15 +1,19 @@
 package Modelo;
 
 public class Verdura extends Benefico {
-	public void calcularDano(Mamifero m) {
-	
+	public Verdura(Movimiento movimiento, float puntaje){
+		super(movimiento,puntaje);
 	}
 	
-	public void calcularDano(Ave a) {
-	
+	public float calcularBeneficio(Mamifero m) {
+		return super.puntaje*1.25f;
 	}
 	
-	public void calcularDano(Reptil r) {
+	public float calcularBeneficio(Ave a) {
+		return super.puntaje;
+	}
 	
+	public float calcularBeneficio(Reptil r) {
+		return super.puntaje*0.75f;
 	}
 }

@@ -1,17 +1,18 @@
 package Modelo;
 
 public abstract class Animal {
-	private String nombre;
-	protected int velocidad;
-	protected Posicion posicion; 
+	protected float vida;
+	protected Posicion posicion;
 	
-	public void nombrar(String nombre) {
-		this.nombre = nombre;
+	public abstract void moverAnimal(float deltaTiempo, boolean derecha, boolean izquierda, Contexto contexto);
+	
+	public abstract void calcularDano(Elemento elemento);
+	
+	public float obtenerVida() {
+		return vida;
 	}
 	
-	public abstract void moverAnimal(int direccion, Contexto contexto);
-	
-	public abstract int calcularDano(Elemento elemento);
-	
-	public abstract boolean soyElAnimal(int tipoAnimal);
+	public boolean estoyMuerto() {
+		return vida >= 0;
+	}
 }

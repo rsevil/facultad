@@ -2,18 +2,14 @@ package Modelo;
 
 public class Tierra extends Contexto {
 	public float calcularVelocidad(Mamifero m) {
-		return 1;
+		return (float)1;
 	}
 	
 	public float calcularVelocidad(Ave a) {
-		return 0.75f;
+		return (float)0.5;
 	}
 	
 	public float calcularVelocidad(Reptil r) {
-		return 0.5f;
-	}
-	
-	public boolean soyElContexto(int tipoContexto){
-		return tipoContexto == 2;
+		return (float)0.75;
 	}
 }

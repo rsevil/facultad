@@ -1,7 +1,8 @@
 package Modelo;
 
 public class Zigzag extends Movimiento {
-	public Posicion calcularPosicion(Posicion posicion, Dificultad dificultad) {
-		return null;
+	public Posicion calcularPosicion(float deltaTiempo, Posicion posicion, Dificultad dificultad) {
+		//TODO:Calcular posicion nueva
+		return posicion;
 	}
 }
