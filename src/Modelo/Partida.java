@@ -9,12 +9,14 @@ public class Partida {
 	private int frames;
 	private int anchoPantalla;
 	private int altoPantalla;
+	private Random random;
+	private boolean derecha;
+	private boolean izquierda;
 	
 	private Animal animal;
 	private Contexto contexto;
 	private Collection<ConfiguracionElemento> configuraciones;
 	private Collection<Elemento> elementos;
-	private Random random;
 	
 	public Partida(int anchoPantalla, int altoPantalla){
 		this.anchoPantalla = anchoPantalla;
@@ -49,7 +51,24 @@ public class Partida {
 		this.configuraciones.add(new ConfiguracionElemento(tipoElemento, puntaje));
 	}
 	
-	public void frame(float deltaTiempo, boolean derecha, boolean izquierda) throws Exception {
+	public void iniciar(float deltaTiempo) throws Exception{
+		while(!terminada())
+			this.frame(deltaTiempo);
+	}
+	
+	public Puntaje obtenerPuntaje() {
+		return new Puntaje(this.nombre, this.puntajeAcumulado);
+	}
+	
+	public void asignarDerecha(boolean derecha){
+		this.derecha = derecha;
+	}
+	
+	public void asignarIzquierda(boolean izquierda){
+		this.izquierda = izquierda;
+	}
+	
+	private void frame(float deltaTiempo) throws Exception {
 		this.frames++;
 		
 		if (this.frames % 180 == 0 && this.elementos.size() < 10){
@@ -57,7 +76,7 @@ public class Partida {
 			this.crearElemento(this.obtenerEnteroAlAzar(1,7));
 		}
 		
-		this.animal.moverAnimal(deltaTiempo, derecha, izquierda);
+		this.animal.moverAnimal(deltaTiempo, this.derecha, this.izquierda);
 		
 		this.moverElementos(deltaTiempo);
 		
@@ -66,12 +85,8 @@ public class Partida {
 		this.calcularPuntaje();
 	}
 	
-	public boolean terminada() {
+	private boolean terminada() {
 		return this.animal.estoyMuerto();
-	}
-	
-	public Puntaje obtenerPuntaje() {
-		return new Puntaje(this.nombre, this.puntajeAcumulado);
 	}
 	
 	private void crearAnimal(int tipoAnimal) {
