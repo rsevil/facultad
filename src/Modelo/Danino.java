@@ -6,15 +6,15 @@ public abstract class Danino extends Elemento {
 	}
 	
 	public float calcularPuntaje(Mamifero m){
-		return -calcularDano(m);
+		return -this.calcularDano(m);
 	}
 	
 	public float calcularPuntaje(Ave a){
-		return -calcularDano(a);
+		return -this.calcularDano(a);
 	}
 	
 	public float calcularPuntaje(Reptil r){
-		return -calcularDano(r);
+		return -this.calcularDano(r);
 	}
 	
 	public abstract float calcularDano(Mamifero m);

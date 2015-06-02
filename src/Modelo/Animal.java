@@ -20,16 +20,21 @@ public abstract class Animal {
 	public abstract void calcularDano(Elemento elemento);
 	
 	public float obtenerVida() {
-		return vida;
+		return this.vida;
 	}
 	
 	public boolean estoyMuerto() {
-		return vida >= 0;
+		return this.vida >= 0;
 	}
 	
 	protected float transformarVelocidad(float vx, boolean derecha, boolean izquierda){
 		if (izquierda)
 			vx = -vx;
+		
+		//si no hay una tecla apretada, entonces ni siquiera 
+		//se mueve a la velocidad que dice el contexto
+		if (!derecha && !izquierda)
+			vx = 0;
 		
 		return vx;
 	}

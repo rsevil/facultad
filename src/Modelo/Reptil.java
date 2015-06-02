@@ -8,7 +8,7 @@ public class Reptil extends Animal {
 	public void moverAnimal(float deltaTiempo, boolean derecha, boolean izquierda) {
 		float vx = this.transformarVelocidad(this.contexto.calcularVelocidad(this), derecha, izquierda);
 		float vy = 0;
-		this.posicion = this.movimiento.calcularPosicion(vx, vy, deltaTiempo, diametro, posicion);
+		this.posicion = this.movimiento.calcularPosicion(vx, vy, deltaTiempo, this.diametro, this.posicion);
 	}
 	
 	public void calcularDano(Elemento elemento) {
