@@ -1,8 +1,8 @@
 package Modelo;
 
-public class Vertical extends Movimiento {
+public class Recto extends Movimiento {
 	
-	public Vertical(int anchoPantalla, int altoPantalla){
+	public Recto(int anchoPantalla, int altoPantalla){
 		super(anchoPantalla, altoPantalla);	
 	}
 	

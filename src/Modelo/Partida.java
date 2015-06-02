@@ -52,8 +52,10 @@ public class Partida {
 	public void frame(float deltaTiempo, boolean derecha, boolean izquierda) throws Exception {
 		this.frames++;
 		
-		if (this.frames % 180 == 0 && this.elementos.size() < 10)
+		if (this.frames % 180 == 0 && this.elementos.size() < 10){
+			this.frames = 0;
 			this.crearElemento(this.obtenerEnteroAlAzar(1,7));
+		}
 		
 		this.animal.moverAnimal(deltaTiempo, derecha, izquierda);
 		
@@ -147,14 +149,14 @@ public class Partida {
 		switch(i)
 		{
 			case 2:
-				m = new Horizontal(this.anchoPantalla,this.altoPantalla);
+				m = new Diagonal(this.anchoPantalla,this.altoPantalla);
 				break;
 			case 3:
 				m = new Zigzag(this.anchoPantalla,this.altoPantalla);
 				break;
 			default:
 			case 1:
-				m = new Vertical(this.anchoPantalla,this.altoPantalla);
+				m = new Recto(this.anchoPantalla,this.altoPantalla);
 				break;
 		}
 		return m;
