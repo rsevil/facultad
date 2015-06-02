@@ -1,8 +1,8 @@
 package Modelo;
 
 public abstract class Benefico extends Elemento {
-	public Benefico(Movimiento movimiento, float puntaje){
-		super(movimiento, puntaje);
+	public Benefico(Movimiento movimiento, Posicion posicion, float puntaje, Dificultad dificultad){
+		super(movimiento, posicion, puntaje, dificultad);
 	}
 	
 	public float calcularPuntaje(Mamifero m){

@@ -1,8 +1,8 @@
 package Modelo;
 
 public class Fruta extends Benefico {
-	public Fruta(Movimiento movimiento, float puntaje){
-		super(movimiento,puntaje);
+	public Fruta(Movimiento movimiento, Posicion posicion, float puntaje, Dificultad dificultad){
+		super(movimiento, posicion, puntaje, dificultad);
 	}
 	
 	public float calcularBeneficio(Mamifero m) {

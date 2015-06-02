@@ -7,11 +7,20 @@ public class Partida {
 	private Dificultad dificultad;
 	private float puntajeAcumulado;
 	private int frames;
+	private int anchoPantalla;
+	private int altoPantalla;
 	
 	private Animal animal;
 	private Contexto contexto;
 	private Collection<ConfiguracionElemento> configuraciones;
 	private Collection<Elemento> elementos;
+	private Random random;
+	
+	public Partida(int anchoPantalla, int altoPantalla){
+		this.anchoPantalla = anchoPantalla;
+		this.altoPantalla = altoPantalla;
+		this.random = new Random();
+	}
 	
 	public void elegirNombre(String nombre) {
 		this.nombre = nombre;
@@ -43,13 +52,10 @@ public class Partida {
 	public void frame(float deltaTiempo, boolean derecha, boolean izquierda) throws Exception {
 		this.frames++;
 		
-		if (this.frames % 180 == 0 && this.elementos.size() < 10){
-			//TODO: generar el tipoElemento al azar
-			int tipoElemento = 1;
-			this.crearElemento(tipoElemento);
-		}
+		if (this.frames % 180 == 0 && this.elementos.size() < 10)
+			this.crearElemento(this.obtenerEnteroAlAzar(1,7));
 		
-		this.animal.moverAnimal(deltaTiempo, derecha, izquierda, this.contexto);
+		this.animal.moverAnimal(deltaTiempo, derecha, izquierda);
 		
 		this.moverElementos(deltaTiempo);
 		
@@ -67,16 +73,18 @@ public class Partida {
 	}
 	
 	private void crearAnimal(int tipoAnimal) {
+		Movimiento m = new Lineal(this.anchoPantalla, this.altoPantalla);
+		Posicion p = new Posicion(this.anchoPantalla/2, this.altoPantalla-20);
 		switch(tipoAnimal)
 		{
 			case 1: 
-				this.animal = new Ave();
+				this.animal = new Ave(m, p, this.contexto);
 				break;
 			case 2:
-				this.animal = new Reptil();
+				this.animal = new Reptil(m, p, this.contexto);
 				break;
 			case 3:
-				this.animal = new Mamifero();
+				this.animal = new Mamifero(m, p, this.contexto);
 				break;
 		}
 	}
@@ -103,37 +111,63 @@ public class Partida {
 		}
 		
 		Movimiento m = this.obtenerMovimiento();
-		Elemento e = null;
+		Posicion p = new Posicion(obtenerRealAlAzar(0,this.anchoPantalla), 0);
+		Elemento e;
 		switch(tipoElemento)
 		{
-			case 1:
-				e = new Verdura(m, puntaje);
-				break;
 			case 2:
-				e = new Fruta(m, puntaje);
+				e = new Fruta(m,p,puntaje,this.dificultad);
 				break;
 			case 3:
-				e = new Carne(m, puntaje);
+				e = new Carne(m,p,puntaje,this.dificultad);
 				break;
 			case 4:
-				e = new Asteroide(m, puntaje);
+				e = new Asteroide(m,p,puntaje,this.dificultad);
 				break;
 			case 5:
-				e = new Estrella(m,puntaje);
+				e = new Estrella(m,p,puntaje,this.dificultad);
 				break;
 			case 6:
-				e = new Lata(m,puntaje);
+				e = new Lata(m,p,puntaje,this.dificultad);
 				break;
 			case 7:
-				e = new Ladrillo(m,puntaje);
+				e = new Ladrillo(m,p,puntaje,this.dificultad);
+				break;
+			default:
+			case 1:
+				e = new Verdura(m,p,puntaje,this.dificultad);
 				break;
 		}
 		this.elementos.add(e);
 	}
 	
 	private Movimiento obtenerMovimiento(){
-		//TODO: obtener movimiento al azar
-		return new Horizontal();
+		Movimiento m;
+		int i = obtenerEnteroAlAzar(1,3);
+		switch(i)
+		{
+			case 2:
+				m = new Horizontal(this.anchoPantalla,this.altoPantalla);
+				break;
+			case 3:
+				m = new Zigzag(this.anchoPantalla,this.altoPantalla);
+				break;
+			default:
+			case 1:
+				m = new Vertical(this.anchoPantalla,this.altoPantalla);
+				break;
+		}
+		return m;
+	}
+	
+	private int obtenerEnteroAlAzar(int min, int max){
+	    return (int)obtenerRealAlAzar(min,max);
+	}
+	
+	private float obtenerRealAlAzar(float min, float max){
+		float rango = max - min + 1;
+	    float fraccion = rango * this.random.nextFloat();
+	    return fraccion + min; 
 	}
 	
 	private boolean existeConfiguracionElemento(int tipoElemento) {
@@ -154,7 +188,7 @@ public class Partida {
 	
 	private void moverElementos(float deltaTiempo) {
 		for(Elemento e : this.elementos)
-			e.moverElemento(deltaTiempo, this.dificultad);
+			e.moverElemento(deltaTiempo);
 	}
 	
 	private void calcularDanos() {

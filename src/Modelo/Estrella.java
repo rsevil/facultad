@@ -1,8 +1,8 @@
 package Modelo;
 
 public class Estrella extends Danino {
-	public Estrella(Movimiento movimiento, float puntaje){
-		super(movimiento,puntaje);
+	public Estrella(Movimiento movimiento, Posicion posicion, float puntaje, Dificultad dificultad){
+		super(movimiento, posicion, puntaje, dificultad);
 	}
 	
 	public float calcularDano(Mamifero m) {

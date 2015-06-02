@@ -1,8 +1,8 @@
 package Modelo;
 
 public class Lata extends Danino {
-	public Lata(Movimiento movimiento, float puntaje){
-		super(movimiento,puntaje);
+	public Lata(Movimiento movimiento, Posicion posicion, float puntaje, Dificultad dificultad){
+		super(movimiento, posicion, puntaje, dificultad);
 	}
 	
 	public float calcularDano(Mamifero m) {

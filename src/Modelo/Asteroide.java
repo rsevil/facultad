@@ -1,8 +1,8 @@
 package Modelo;
 
 public class Asteroide extends Danino {
-	public Asteroide(Movimiento movimiento, float puntaje){
-		super(movimiento,puntaje);
+	public Asteroide(Movimiento movimiento, Posicion posicion, float puntaje, Dificultad dificultad){
+		super(movimiento, posicion, puntaje, dificultad);
 	}
 	
 	public float calcularDano(Mamifero m) {
