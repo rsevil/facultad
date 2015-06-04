@@ -6024,11 +6024,11 @@
 </XPD:OBJ>
 </XPD:OBJ>
 <XPD:OBJ name="InteractionInstanceSets[1]" type="UMLInteractionInstanceSet" guid="4SzxSCO2G0mus65CeMxC2AAA">
-<XPD:ATTR name="Name" type="string">Frame Partida</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">Iniciar Partida</XPD:ATTR>
 <XPD:REF name="Context">EM2er+2szECBsZ4XYI34WAAA</XPD:REF>
 <XPD:ATTR name="#OwnedDiagrams" type="integer">1</XPD:ATTR>
 <XPD:OBJ name="OwnedDiagrams[0]" type="UMLSequenceDiagram" guid="czwGq7fGGE2aBrKIy7m/cwAA">
-<XPD:ATTR name="Name" type="string">Frame Partida</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">Iniciar Partida</XPD:ATTR>
 <XPD:REF name="DiagramOwner">4SzxSCO2G0mus65CeMxC2AAA</XPD:REF>
 <XPD:OBJ name="DiagramView" type="UMLSequenceDiagramView" guid="kNjyJGgtB0OUf8MXNU8tUwAA">
 <XPD:REF name="Diagram">czwGq7fGGE2aBrKIy7m/cwAA</XPD:REF>
