@@ -11,6 +11,7 @@ public class Juego {
 	public Juego(int anchoPantalla, int altoPantalla){
 		this.anchoPantalla = anchoPantalla;
 		this.altoPantalla = altoPantalla;
+		this.partidas = new ArrayList<Partida>();
 	}
 	
 	public Partida nuevaPartida() {
