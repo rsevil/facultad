@@ -1,18 +1,21 @@
 package Modelo;
 
 public abstract class Danino extends Elemento {
-	public Danino(Movimiento movimiento, Posicion posicion, float puntaje, Dificultad dificultad){
-		super(movimiento, posicion, puntaje, dificultad);
+	public Danino(Movimiento movimiento, Posicion posicion, float vx, float vy, float puntaje){
+		super(movimiento, posicion, vx, vy, puntaje);
 	}
-	
+
+	@Override
 	public float calcularPuntaje(Mamifero m){
 		return -this.calcularDano(m);
 	}
 	
+	@Override
 	public float calcularPuntaje(Ave a){
 		return -this.calcularDano(a);
 	}
 	
+	@Override
 	public float calcularPuntaje(Reptil r){
 		return -this.calcularDano(r);
 	}

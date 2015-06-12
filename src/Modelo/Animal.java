@@ -1,23 +1,45 @@
 package Modelo;
 
-public abstract class Animal {
+public abstract class Animal extends Objeto {
 	protected float vida;
-	protected int diametro;
-	
-	protected Movimiento movimiento;
-	protected Posicion posicion;
 	protected Contexto contexto;
+	private boolean derecha;
+	private boolean izquierda;
 	
 	public Animal(Movimiento movimiento, Posicion posicion, Contexto contexto){
-		this.diametro = 10;
-		this.movimiento = movimiento;
-		this.posicion = posicion;
+		super(movimiento, posicion, 4);
 		this.contexto = contexto;
 	}
 	
-	public abstract void moverAnimal(float deltaTiempo, boolean derecha, boolean izquierda);
+	public void moverAnimal(float deltaTiempo, boolean derecha, boolean izquierda){
+		this.izquierda = izquierda;
+		this.derecha = derecha;
+		this.mover(deltaTiempo);
+	}
 	
-	public abstract void calcularDano(Elemento elemento);
+	protected abstract float calcularVelocidad();
+	
+	@Override
+	protected float obtenerVX(){
+		return this.transformarVelocidad(this.calcularVelocidad(), this.derecha, this.izquierda);
+	}
+	
+	@Override
+	protected float obtenerVY(){
+		return this.transformarVelocidad(this.calcularVelocidad(), false, false);
+	}
+	
+	public void calcularPuntaje(Elemento elemento){
+		float xi = this.posicion.obtenerX();
+		float xf = xi + this.ancho;
+		float yi = this.posicion.obtenerY();
+		float yf = yi + this.alto;
+		
+		if (elemento.ocupaCoordenadas(xi, xf, yi, yf))
+			this.calcularVida(elemento);
+	}
+	
+	protected abstract void calcularVida(Elemento elemento);
 	
 	public float obtenerVida() {
 		return this.vida;
@@ -27,13 +49,13 @@ public abstract class Animal {
 		return this.vida >= 0;
 	}
 	
-	protected float transformarVelocidad(float vx, boolean derecha, boolean izquierda){
-		if (izquierda)
+	protected float transformarVelocidad(float vx, boolean positivo, boolean negativo){
+		if (negativo)
 			vx = -vx;
 		
 		//si no hay una tecla apretada, entonces ni siquiera 
 		//se mueve a la velocidad que dice el contexto
-		if (!derecha && !izquierda)
+		if (!positivo && !negativo)
 			vx = 0;
 		
 		return vx;

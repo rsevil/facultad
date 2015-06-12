@@ -10,9 +10,9 @@ public class Diagonal extends Movimiento {
 		this.derecha = true;
 		this.izquierda = false;
 	}
-	
-	public Posicion calcularPosicion(float vx, float vy, float deltaTiempo, int diametro, Posicion posicion) {
-		float xf = posicion.obtenerX() + diametro;
+
+	@Override
+	public Posicion calcularPosicion(float vx, float vy, float deltaTiempo, float xi, float xf, float yi, float yf) {
 		if (this.derecha && xf >= anchoPantalla){
 			this.derecha = false;
 			this.izquierda = true;
@@ -25,7 +25,7 @@ public class Diagonal extends Movimiento {
 			vx = -vx;
 		
 		return new Posicion(
-				limites(posicion.obtenerX() + vx * deltaTiempo, 0, this.anchoPantalla - diametro),
-				limites(posicion.obtenerY() + vy * deltaTiempo, 0, this.altoPantalla - diametro));
+				limites(xi + vx * deltaTiempo, 0, this.anchoPantalla - (xf - xi)),
+				limites(yi + vy * deltaTiempo, 0, this.altoPantalla - (yf - yi)));
 	}
 }

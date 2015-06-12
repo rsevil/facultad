@@ -6,10 +6,11 @@ public class Lineal extends Movimiento {
 		super(anchoPantalla, altoPantalla);
 	}
 
-	public Posicion calcularPosicion(float vx, float vy, float deltaTiempo, int diametro, Posicion posicion) {
+	@Override
+	public Posicion calcularPosicion(float vx, float vy, float deltaTiempo, float xi, float xf, float yi, float yf) {
 		return new Posicion(
-				limites(posicion.obtenerX() + vx * deltaTiempo, 0, this.anchoPantalla - diametro),
-				posicion.obtenerY());
+				limites(xi + vx * deltaTiempo, 0, this.anchoPantalla - (xf - xi)), 
+				yi);
 	}
 
 }

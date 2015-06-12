@@ -5,14 +5,13 @@ public class Mamifero extends Animal {
 		super(movimiento, posicion, contexto);
 	}
 	
-	public void moverAnimal(float deltaTiempo, boolean derecha, boolean izquierda) {
-		float vx = this.transformarVelocidad(this.contexto.calcularVelocidad(this), derecha, izquierda);
-		float vy = 0;
-		this.posicion = this.movimiento.calcularPosicion(vx, vy, deltaTiempo, this.diametro, this.posicion);
+	@Override
+	protected void calcularVida(Elemento elemento) {
+		this.vida += elemento.calcularPuntaje(this);
 	}
-	
-	public void calcularDano(Elemento elemento) {
-		if (elemento.ocupaCoordenadas(this.posicion.obtenerX(), this.posicion.obtenerY()))
-			this.vida += elemento.calcularPuntaje(this);
+
+	@Override
+	protected float calcularVelocidad() {
+		return this.contexto.calcularVelocidad(this);
 	}
 }

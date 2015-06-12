@@ -2,6 +2,8 @@ package Modelo;
 
 import java.util.*;
 
+import Modelo.Fabricas.*;
+
 public class Partida {
 	private String nombre;
 	private Dificultad dificultad;
@@ -18,21 +20,40 @@ public class Partida {
 	private Collection<ConfiguracionElemento> configuraciones;
 	private Collection<Elemento> elementos;
 	
-	public Partida(int anchoPantalla, int altoPantalla){
+	private Collection<Map.Entry<Integer,FabricaAnimal>> fabricasAnimales;
+	private Collection<Map.Entry<Integer,FabricaElemento>> fabricasElementos;
+	private Collection<Map.Entry<Integer,FabricaContexto>> fabricasContextos;
+	private Collection<Map.Entry<Integer, FabricaMovimiento>> fabricasMovimientos;
+	
+	public Partida(
+			int anchoPantalla, 
+			int altoPantalla, 
+			Collection<Map.Entry<Integer,FabricaAnimal>> fabricasAnimales,
+			Collection<Map.Entry<Integer,FabricaElemento>> fabricasElementos,
+			Collection<Map.Entry<Integer,FabricaContexto>> fabricasContextos, 
+			Collection<Map.Entry<Integer, FabricaMovimiento>> fabricasMovimientos)
+	{
 		this.anchoPantalla = anchoPantalla;
 		this.altoPantalla = altoPantalla;
+		this.fabricasAnimales = fabricasAnimales;
+		this.fabricasElementos = fabricasElementos;
+		this.fabricasContextos = fabricasContextos;
+		this.fabricasMovimientos = fabricasMovimientos;
+		
 		this.random = new Random();
+		this.configuraciones = new ArrayList<ConfiguracionElemento>();
+		this.elementos = new ArrayList<Elemento>();
 	}
 	
 	public void elegirNombre(String nombre) {
 		this.nombre = nombre;
 	}
 	
-	public void elegirAnimal(int tipoAnimal) {
+	public void elegirAnimal(int tipoAnimal) throws Exception {
 		this.crearAnimal(tipoAnimal);
 	}
 	
-	public void elegirContexto(int tipoContexto) {
+	public void elegirContexto(int tipoContexto) throws Exception {
 		this.crearContexto(tipoContexto);
 	}
 	
@@ -51,9 +72,14 @@ public class Partida {
 		this.configuraciones.add(new ConfiguracionElemento(tipoElemento, puntaje));
 	}
 	
-	public void iniciar(float deltaTiempo) throws Exception{
-		while(!terminada())
+	public void iniciar() throws Exception{
+		long ti = System.nanoTime();
+		while(!terminada()){
+			long tf = System.nanoTime();
+			float deltaTiempo = (tf - ti) / 1000000000f;
+			ti = tf;
 			this.frame(deltaTiempo);
+		}
 	}
 	
 	public Puntaje obtenerPuntaje() {
@@ -80,7 +106,7 @@ public class Partida {
 		
 		this.moverElementos(deltaTiempo);
 		
-		this.calcularDanos();
+		this.calcularVida();
 		
 		this.calcularPuntaje();
 	}
@@ -89,35 +115,37 @@ public class Partida {
 		return this.animal.estoyMuerto();
 	}
 	
-	private void crearAnimal(int tipoAnimal) {
+	private void crearAnimal(int tipoAnimal) throws Exception {
 		Movimiento m = new Lineal(this.anchoPantalla, this.altoPantalla);
 		Posicion p = new Posicion(this.anchoPantalla/2, this.altoPantalla-20);
-		switch(tipoAnimal)
-		{
-			case 1: 
-				this.animal = new Ave(m, p, this.contexto);
+		
+		FabricaAnimal fabrica = null;
+		for(Map.Entry<Integer,FabricaAnimal> kv : this.fabricasAnimales){
+			if (kv.getKey() == tipoAnimal){
+				fabrica = kv.getValue();
 				break;
-			case 2:
-				this.animal = new Reptil(m, p, this.contexto);
-				break;
-			case 3:
-				this.animal = new Mamifero(m, p, this.contexto);
-				break;
+			}
 		}
+		
+		if(fabrica == null)
+			throw new Exception("Fabrica de animal no existe, tipoAnimal: " + tipoAnimal);
+		
+		this.animal = fabrica.Crear(m, p, this.contexto);
 	}
 	
-	private void crearContexto(int tipoContexto) {
-		switch(tipoContexto){
-			case 1:
-				this.contexto = new Aire();
+	private void crearContexto(int tipoContexto) throws Exception {
+		FabricaContexto fabrica = null;
+		for(Map.Entry<Integer,FabricaContexto> kv : this.fabricasContextos){
+			if (kv.getKey() == tipoContexto){
+				fabrica = kv.getValue();
 				break;
-			case 2:
-				this.contexto = new Tierra();
-				break;
-			case 3:
-				this.contexto = new Agua();
-				break;
+			}
 		}
+		
+		if(fabrica == null)
+			throw new Exception("Fabrica de contexto no existe, tipoContexto: " + tipoContexto);
+		
+		this.contexto = fabrica.Crear();
 	}
 	
 	private void crearElemento(int tipoElemento) throws Exception {
@@ -129,52 +157,48 @@ public class Partida {
 		
 		Movimiento m = this.obtenerMovimiento();
 		Posicion p = new Posicion(obtenerRealAlAzar(0,this.anchoPantalla), 0);
-		Elemento e;
-		switch(tipoElemento)
-		{
-			case 2:
-				e = new Fruta(m,p,puntaje,this.dificultad);
+		
+		FabricaElemento fabrica = null;
+		for(Map.Entry<Integer,FabricaElemento> kv : this.fabricasElementos){
+			if (kv.getKey() == tipoElemento){
+				fabrica = kv.getValue();
 				break;
-			case 3:
-				e = new Carne(m,p,puntaje,this.dificultad);
+			}
+		}
+		
+		if(fabrica == null)
+			throw new Exception("Fabrica de elemento no existe, tipoElemento: " + tipoElemento);
+		
+		float v = 1;
+		switch(dificultad){
+			case dificil:
+				v = v * 2;
 				break;
-			case 4:
-				e = new Asteroide(m,p,puntaje,this.dificultad);
-				break;
-			case 5:
-				e = new Estrella(m,p,puntaje,this.dificultad);
-				break;
-			case 6:
-				e = new Lata(m,p,puntaje,this.dificultad);
-				break;
-			case 7:
-				e = new Ladrillo(m,p,puntaje,this.dificultad);
+			case facil:
+				v = v / 2;
 				break;
 			default:
-			case 1:
-				e = new Verdura(m,p,puntaje,this.dificultad);
 				break;
 		}
-		this.elementos.add(e);
+		
+		this.elementos.add(fabrica.Crear(m, p, v, v, puntaje));
 	}
 	
-	private Movimiento obtenerMovimiento(){
-		Movimiento m;
-		int i = obtenerEnteroAlAzar(1,3);
-		switch(i)
-		{
-			case 2:
-				m = new Diagonal(this.anchoPantalla,this.altoPantalla);
+	private Movimiento obtenerMovimiento() throws Exception{
+		int tipoMovimiento = obtenerEnteroAlAzar(1,3);
+		
+		FabricaMovimiento fabrica = null;
+		for(Map.Entry<Integer,FabricaMovimiento> kv : this.fabricasMovimientos){
+			if (kv.getKey() == tipoMovimiento){
+				fabrica = kv.getValue();
 				break;
-			case 3:
-				m = new Zigzag(this.anchoPantalla,this.altoPantalla);
-				break;
-			default:
-			case 1:
-				m = new Recto(this.anchoPantalla,this.altoPantalla);
-				break;
+			}
 		}
-		return m;
+		
+		if(fabrica == null)
+			throw new Exception("Fabrica de movimiento no existe, tipoMovimiento: " + tipoMovimiento);
+		
+		return fabrica.Crear(this.anchoPantalla,this.altoPantalla);
 	}
 	
 	private int obtenerEnteroAlAzar(int min, int max){
@@ -208,12 +232,12 @@ public class Partida {
 			e.moverElemento(deltaTiempo);
 	}
 	
-	private void calcularDanos() {
+	private void calcularVida() {
 		float vidaAnterior = 0;
 		for(Iterator<Elemento> it = this.elementos.iterator(); it.hasNext();){
 			Elemento e = it.next();
 			vidaAnterior = this.animal.obtenerVida();
-			this.animal.calcularDano(e);
+			this.animal.calcularPuntaje(e);
 			if (vidaAnterior != this.animal.obtenerVida())
 				it.remove();
 		}

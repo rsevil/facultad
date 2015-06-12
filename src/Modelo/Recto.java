@@ -5,10 +5,11 @@ public class Recto extends Movimiento {
 	public Recto(int anchoPantalla, int altoPantalla){
 		super(anchoPantalla, altoPantalla);	
 	}
-	
-	public Posicion calcularPosicion(float vx, float vy, float deltaTiempo, int diametro, Posicion posicion) {
+
+	@Override
+	public Posicion calcularPosicion(float vx, float vy, float deltaTiempo, float xi, float xf, float yi, float yf) {
 		return new Posicion(
-				posicion.obtenerX(),
-				limites(posicion.obtenerY() + vy * deltaTiempo, 0, this.altoPantalla - diametro));
+				xi,
+				limites(yi + vy * deltaTiempo, 0, this.altoPantalla - (yf - yi)));
 	}
 }

@@ -1,19 +1,26 @@
 package Modelo;
 
-public abstract class Elemento {
+public abstract class Elemento extends Objeto {
 	protected float puntaje;
-	protected Movimiento movimiento;
-	protected Posicion posicion;
 	
 	private float vx;
 	private float vy;
 	
-	public Elemento(Movimiento movimiento, Posicion posicion, float puntaje, Dificultad dificultad) {
-		this.movimiento = movimiento;
+	public Elemento(Movimiento movimiento, Posicion posicion, float vx, float vy, float puntaje) {
+		super(movimiento, posicion, 4);
 		this.puntaje = puntaje;
-		this.posicion = posicion;
-		this.vx = this.transformarVelocidad(100, dificultad);
-		this.vy = this.transformarVelocidad(100, dificultad);
+		this.vx = vx;
+		this.vy = vy;
+	}
+	
+	@Override
+	protected float obtenerVX(){
+		return this.vx;
+	}
+	
+	@Override
+	protected float obtenerVY(){
+		return this.vy;
 	}
 	
 	public abstract float calcularPuntaje(Mamifero m);
@@ -23,25 +30,15 @@ public abstract class Elemento {
 	public abstract float calcularPuntaje(Reptil r);
 	
 	public void moverElemento(float deltaTiempo) {
-		this.posicion = this.movimiento.calcularPosicion(this.vx, this.vy, deltaTiempo, 10, this.posicion);
+		this.mover(deltaTiempo);
 	}
 	
-	public boolean ocupaCoordenadas(float x, float y) {
-		return this.posicion.obtenerX() == x 
-			&& this.posicion.obtenerY() == y;
-	}
-	
-	protected float transformarVelocidad(float v, Dificultad dificultad){
-		switch(dificultad){
-		case dificil:
-			v = v * 2;
-			break;
-		case facil:
-			v = v / 2;
-			break;
-		default:
-			break;
-		}
-		return v;
+	public boolean ocupaCoordenadas(float xi, float xf, float yi, float yf) {
+		float xib = this.posicion.obtenerX();
+		float xfb = xib + this.ancho;
+		float yib = this.posicion.obtenerY();
+		float yfb = yib + this.alto;
+		
+		return !(yf <= yib || yi >= yfb || xf <= xib || xi >= xfb);
 	}
 }
