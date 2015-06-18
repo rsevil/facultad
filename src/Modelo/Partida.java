@@ -20,18 +20,18 @@ public class Partida {
 	private Collection<ConfiguracionElemento> configuraciones;
 	private Collection<Elemento> elementos;
 	
-	private Collection<Map.Entry<Integer,FabricaAnimal>> fabricasAnimales;
-	private Collection<Map.Entry<Integer,FabricaElemento>> fabricasElementos;
-	private Collection<Map.Entry<Integer,FabricaContexto>> fabricasContextos;
-	private Collection<Map.Entry<Integer, FabricaMovimiento>> fabricasMovimientos;
+	private Map<Integer,FabricaAnimal> fabricasAnimales;
+	private Map<Integer,FabricaElemento> fabricasElementos;
+	private Map<Integer,FabricaContexto> fabricasContextos;
+	private Map<Integer,FabricaMovimiento> fabricasMovimientos;
 	
 	public Partida(
 			int anchoPantalla, 
 			int altoPantalla, 
-			Collection<Map.Entry<Integer,FabricaAnimal>> fabricasAnimales,
-			Collection<Map.Entry<Integer,FabricaElemento>> fabricasElementos,
-			Collection<Map.Entry<Integer,FabricaContexto>> fabricasContextos, 
-			Collection<Map.Entry<Integer, FabricaMovimiento>> fabricasMovimientos)
+			Map<Integer,FabricaAnimal> fabricasAnimales,
+			Map<Integer,FabricaElemento> fabricasElementos,
+			Map<Integer,FabricaContexto> fabricasContextos, 
+			Map<Integer,FabricaMovimiento> fabricasMovimientos)
 	{
 		this.anchoPantalla = anchoPantalla;
 		this.altoPantalla = altoPantalla;
@@ -97,7 +97,7 @@ public class Partida {
 	private void frame(float deltaTiempo) throws Exception {
 		this.frames++;
 		
-		if (this.frames % 180 == 0 && this.elementos.size() < 10){
+		if (this.frames % 180 == 0 && this.elementos.size() <= 10){
 			this.frames = 0;
 			this.crearElemento(this.obtenerEnteroAlAzar(1,7));
 		}
@@ -119,13 +119,7 @@ public class Partida {
 		Movimiento m = new Lineal(this.anchoPantalla, this.altoPantalla);
 		Posicion p = new Posicion(this.anchoPantalla/2, this.altoPantalla-20);
 		
-		FabricaAnimal fabrica = null;
-		for(Map.Entry<Integer,FabricaAnimal> kv : this.fabricasAnimales){
-			if (kv.getKey() == tipoAnimal){
-				fabrica = kv.getValue();
-				break;
-			}
-		}
+		FabricaAnimal fabrica = this.fabricasAnimales.getOrDefault(tipoAnimal, null);
 		
 		if(fabrica == null)
 			throw new Exception("Fabrica de animal no existe, tipoAnimal: " + tipoAnimal);
@@ -134,13 +128,7 @@ public class Partida {
 	}
 	
 	private void crearContexto(int tipoContexto) throws Exception {
-		FabricaContexto fabrica = null;
-		for(Map.Entry<Integer,FabricaContexto> kv : this.fabricasContextos){
-			if (kv.getKey() == tipoContexto){
-				fabrica = kv.getValue();
-				break;
-			}
-		}
+		FabricaContexto fabrica = this.fabricasContextos.getOrDefault(tipoContexto, null);
 		
 		if(fabrica == null)
 			throw new Exception("Fabrica de contexto no existe, tipoContexto: " + tipoContexto);
@@ -158,13 +146,7 @@ public class Partida {
 		Movimiento m = this.obtenerMovimiento();
 		Posicion p = new Posicion(obtenerRealAlAzar(0,this.anchoPantalla), 0);
 		
-		FabricaElemento fabrica = null;
-		for(Map.Entry<Integer,FabricaElemento> kv : this.fabricasElementos){
-			if (kv.getKey() == tipoElemento){
-				fabrica = kv.getValue();
-				break;
-			}
-		}
+		FabricaElemento fabrica = this.fabricasElementos.getOrDefault(tipoElemento, null);
 		
 		if(fabrica == null)
 			throw new Exception("Fabrica de elemento no existe, tipoElemento: " + tipoElemento);
@@ -187,13 +169,7 @@ public class Partida {
 	private Movimiento obtenerMovimiento() throws Exception{
 		int tipoMovimiento = obtenerEnteroAlAzar(1,3);
 		
-		FabricaMovimiento fabrica = null;
-		for(Map.Entry<Integer,FabricaMovimiento> kv : this.fabricasMovimientos){
-			if (kv.getKey() == tipoMovimiento){
-				fabrica = kv.getValue();
-				break;
-			}
-		}
+		FabricaMovimiento fabrica = this.fabricasMovimientos.getOrDefault(tipoMovimiento, null);
 		
 		if(fabrica == null)
 			throw new Exception("Fabrica de movimiento no existe, tipoMovimiento: " + tipoMovimiento);

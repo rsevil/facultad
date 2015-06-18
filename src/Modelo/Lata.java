@@ -2,7 +2,7 @@ package Modelo;
 
 public class Lata extends Danino {
 	public Lata(Movimiento movimiento, Posicion posicion, float vx, float vy, float puntaje){
-		super("lata.png", movimiento, posicion, vx, vy, puntaje);
+		super(movimiento, posicion, vx, vy, puntaje);
 	}
 
 	@Override

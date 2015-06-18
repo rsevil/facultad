@@ -6,8 +6,8 @@ public abstract class Animal extends EntidadMovil {
 	private boolean derecha;
 	private boolean izquierda;
 	
-	public Animal(String imageName, Movimiento movimiento, Posicion posicion, Contexto contexto){
-		super(imageName, movimiento, posicion, 4);
+	public Animal(Movimiento movimiento, Posicion posicion, Contexto contexto){
+		super(movimiento, posicion, 4);
 		this.contexto = contexto;
 	}
 	
@@ -46,7 +46,7 @@ public abstract class Animal extends EntidadMovil {
 	}
 	
 	public boolean estoyMuerto() {
-		return this.vida >= 0;
+		return this.vida <= 0;
 	}
 	
 	protected float transformarVelocidad(float vx, boolean positivo, boolean negativo){
@@ -55,7 +55,8 @@ public abstract class Animal extends EntidadMovil {
 		
 		//si no hay una tecla apretada, entonces ni siquiera 
 		//se mueve a la velocidad que dice el contexto
-		if (!positivo && !negativo)
+		if (!positivo && !negativo 
+				|| positivo && negativo)
 			vx = 0;
 		
 		return vx;

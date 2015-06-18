@@ -1,8 +1,8 @@
 package Modelo;
 
 public abstract class Danino extends Elemento {
-	public Danino(String imageName, Movimiento movimiento, Posicion posicion, float vx, float vy, float puntaje){
-		super(imageName, movimiento, posicion, vx, vy, puntaje);
+	public Danino(Movimiento movimiento, Posicion posicion, float vx, float vy, float puntaje){
+		super(movimiento, posicion, vx, vy, puntaje);
 	}
 
 	@Override

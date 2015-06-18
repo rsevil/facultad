@@ -2,7 +2,7 @@ package Modelo;
 
 public class Estrella extends Danino {
 	public Estrella(Movimiento movimiento, Posicion posicion, float vx, float vy, float puntaje){
-		super("estrella.png", movimiento, posicion, vx, vy, puntaje);
+		super(movimiento, posicion, vx, vy, puntaje);
 	}
 
 	@Override

@@ -2,7 +2,7 @@ package Modelo;
 
 public class Ladrillo extends Danino {
 	public Ladrillo(Movimiento movimiento, Posicion posicion, float vx, float vy, float puntaje){
-		super("ladrillo.png", movimiento, posicion, vx, vy, puntaje);
+		super(movimiento, posicion, vx, vy, puntaje);
 	}
 
 	@Override

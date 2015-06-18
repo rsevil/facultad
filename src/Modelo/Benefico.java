@@ -1,8 +1,8 @@
 package Modelo;
 
 public abstract class Benefico extends Elemento {
-	public Benefico(String imageName, Movimiento movimiento, Posicion posicion, float vx, float vy, float puntaje){
-		super(imageName, movimiento, posicion, vx, vy, puntaje);
+	public Benefico(Movimiento movimiento, Posicion posicion, float vx, float vy, float puntaje){
+		super(movimiento, posicion, vx, vy, puntaje);
 	}
 
 	@Override
