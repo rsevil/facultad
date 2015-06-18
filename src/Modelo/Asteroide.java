@@ -2,7 +2,7 @@ package Modelo;
 
 public class Asteroide extends Danino {
 	public Asteroide(Movimiento movimiento, Posicion posicion, float vx, float vy, float puntaje){
-		super(movimiento, posicion, vx, vy, puntaje);
+		super("asteroide.png", movimiento, posicion, vx, vy, puntaje);
 	}
 
 	@Override

@@ -1,13 +1,13 @@
 package Modelo;
 
-public abstract class Elemento extends Objeto {
+public abstract class Elemento extends EntidadMovil {
 	protected float puntaje;
 	
 	private float vx;
 	private float vy;
 	
-	public Elemento(Movimiento movimiento, Posicion posicion, float vx, float vy, float puntaje) {
-		super(movimiento, posicion, 4);
+	public Elemento(String imageName, Movimiento movimiento, Posicion posicion, float vx, float vy, float puntaje) {
+		super(imageName, movimiento, posicion, 4);
 		this.puntaje = puntaje;
 		this.vx = vx;
 		this.vy = vy;

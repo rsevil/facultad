@@ -2,7 +2,7 @@ package Modelo;
 
 public class Reptil extends Animal {
 	public Reptil(Movimiento movimiento, Posicion posicion, Contexto contexto){
-		super(movimiento, posicion, contexto);
+		super("reptil.png", movimiento, posicion, contexto);
 	}
 	
 	@Override

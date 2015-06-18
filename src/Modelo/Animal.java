@@ -1,13 +1,13 @@
 package Modelo;
 
-public abstract class Animal extends Objeto {
+public abstract class Animal extends EntidadMovil {
 	protected float vida;
 	protected Contexto contexto;
 	private boolean derecha;
 	private boolean izquierda;
 	
-	public Animal(Movimiento movimiento, Posicion posicion, Contexto contexto){
-		super(movimiento, posicion, 4);
+	public Animal(String imageName, Movimiento movimiento, Posicion posicion, Contexto contexto){
+		super(imageName, movimiento, posicion, 4);
 		this.contexto = contexto;
 	}
 	

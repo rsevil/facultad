@@ -2,7 +2,7 @@ package Modelo;
 
 public class Mamifero extends Animal {
 	public Mamifero(Movimiento movimiento, Posicion posicion, Contexto contexto){
-		super(movimiento, posicion, contexto);
+		super("mamifero.png", movimiento, posicion, contexto);
 	}
 	
 	@Override

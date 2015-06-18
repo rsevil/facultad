@@ -2,7 +2,7 @@ package Modelo;
 
 public class Carne extends Benefico {
 	public Carne(Movimiento movimiento, Posicion posicion, float vx, float vy, float puntaje){
-		super(movimiento, posicion, vx, vy, puntaje);
+		super("carne.png", movimiento, posicion, vx, vy, puntaje);
 	}
 
 	@Override

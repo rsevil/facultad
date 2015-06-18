@@ -2,7 +2,7 @@ package Modelo;
 
 public class Verdura extends Benefico {
 	public Verdura(Movimiento movimiento, Posicion posicion, float vx, float vy, float puntaje){
-		super(movimiento, posicion, vx, vy, puntaje);
+		super("verdura.png", movimiento, posicion, vx, vy, puntaje);
 	}
 
 	@Override
