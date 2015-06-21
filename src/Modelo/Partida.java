@@ -109,6 +109,8 @@ public class Partida {
 		this.calcularVida();
 		
 		this.calcularPuntaje();
+		
+		this.eliminarElementos();
 	}
 	
 	private boolean terminada() {
@@ -223,5 +225,13 @@ public class Partida {
 		float vida = this.animal.obtenerVida();
 		if (vida > this.puntajeAcumulado)
 			this.puntajeAcumulado = vida;
+	}
+	
+	private void eliminarElementos(){
+		for(Iterator<Elemento> it = this.elementos.iterator(); it.hasNext();){
+			Elemento e = it.next();
+			if (!e.ocupaCoordenadas(0, anchoPantalla, 0, altoPantalla))
+				it.remove();
+		}
 	}
 }
