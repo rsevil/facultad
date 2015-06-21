@@ -6,17 +6,17 @@ public class Verdura extends Benefico {
 	}
 
 	@Override
-	public float calcularBeneficio(Mamifero m) {
+	float calcularBeneficio(Mamifero m) {
 		return super.puntaje*1.25f;
 	}
 	
 	@Override
-	public float calcularBeneficio(Ave a) {
+	float calcularBeneficio(Ave a) {
 		return super.puntaje;
 	}
 	
 	@Override
-	public float calcularBeneficio(Reptil r) {
+	float calcularBeneficio(Reptil r) {
 		return super.puntaje*0.75f;
 	}
 }

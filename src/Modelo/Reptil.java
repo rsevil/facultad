@@ -6,7 +6,7 @@ public class Reptil extends Animal {
 	}
 	
 	@Override
-	public void calcularVida(Elemento elemento) {
+	void calcularVida(Elemento elemento) {
 		this.vida += elemento.calcularPuntaje(this);
 	}
 

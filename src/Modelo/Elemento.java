@@ -23,17 +23,17 @@ public abstract class Elemento extends EntidadMovil {
 		return this.vy;
 	}
 	
-	public abstract float calcularPuntaje(Mamifero m);
+	abstract float calcularPuntaje(Mamifero m);
 	
-	public abstract float calcularPuntaje(Ave a);
+	abstract float calcularPuntaje(Ave a);
 	
-	public abstract float calcularPuntaje(Reptil r);
+	abstract float calcularPuntaje(Reptil r);
 	
-	public void moverElemento(float deltaTiempo) {
+	void moverElemento(float deltaTiempo) {
 		this.mover(deltaTiempo);
 	}
 	
-	public boolean ocupaCoordenadas(float xi, float xf, float yi, float yf) {
+	boolean ocupaCoordenadas(float xi, float xf, float yi, float yf) {
 		float xib = this.posicion.obtenerX();
 		float xfb = xib + this.ancho;
 		float yib = this.posicion.obtenerY();

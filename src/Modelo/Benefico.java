@@ -6,21 +6,21 @@ public abstract class Benefico extends Elemento {
 	}
 
 	@Override
-	public float calcularPuntaje(Mamifero m){
+	float calcularPuntaje(Mamifero m){
 		return calcularBeneficio(m);
 	}
 	
 	@Override
-	public float calcularPuntaje(Ave a){
+	float calcularPuntaje(Ave a){
 		return calcularBeneficio(a);
 	}
 	
 	@Override
-	public float calcularPuntaje(Reptil r){
+	float calcularPuntaje(Reptil r){
 		return calcularBeneficio(r);
 	}
 	
-	public abstract float calcularBeneficio(Mamifero m);
-	public abstract float calcularBeneficio(Ave a);
-	public abstract float calcularBeneficio(Reptil r);
+	abstract float calcularBeneficio(Mamifero m);
+	abstract float calcularBeneficio(Ave a);
+	abstract float calcularBeneficio(Reptil r);
 }

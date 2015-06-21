@@ -11,7 +11,7 @@ public abstract class Animal extends EntidadMovil {
 		this.contexto = contexto;
 	}
 	
-	public void moverAnimal(float deltaTiempo, boolean derecha, boolean izquierda){
+	void moverAnimal(float deltaTiempo, boolean derecha, boolean izquierda){
 		this.izquierda = izquierda;
 		this.derecha = derecha;
 		this.mover(deltaTiempo);
@@ -29,7 +29,7 @@ public abstract class Animal extends EntidadMovil {
 		return this.transformarVelocidad(this.calcularVelocidad(), false, false);
 	}
 	
-	public void calcularPuntaje(Elemento elemento){
+	void calcularPuntaje(Elemento elemento){
 		float xi = this.posicion.obtenerX();
 		float xf = xi + this.ancho;
 		float yi = this.posicion.obtenerY();
@@ -39,13 +39,13 @@ public abstract class Animal extends EntidadMovil {
 			this.calcularVida(elemento);
 	}
 	
-	protected abstract void calcularVida(Elemento elemento);
+	abstract void calcularVida(Elemento elemento);
 	
-	public float obtenerVida() {
+	float obtenerVida() {
 		return this.vida;
 	}
 	
-	public boolean estoyMuerto() {
+	boolean estoyMuerto() {
 		return this.vida <= 0;
 	}
 	
