@@ -47,6 +47,7 @@ public class Juego {
 		this.fabricasMovimientos.put(1, new FabricaMovimientoRecto());
 		this.fabricasMovimientos.put(2, new FabricaMovimientoDiagonal());
 		this.fabricasMovimientos.put(3, new FabricaMovimientoZigzag());
+		this.fabricasMovimientos.put(4, new FabricaMovimientoLineal());
 	}
 	
 	public Partida nuevaPartida() {

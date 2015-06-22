@@ -17,13 +17,19 @@ public class Partida {
 	
 	private Animal animal;
 	private Contexto contexto;
-	private Collection<ConfiguracionElemento> configuraciones;
+	private Map<Integer,Float> puntajesElementos;
 	private Collection<Elemento> elementos;
 	
 	private Map<Integer,FabricaAnimal> fabricasAnimales;
 	private Map<Integer,FabricaElemento> fabricasElementos;
 	private Map<Integer,FabricaContexto> fabricasContextos;
 	private Map<Integer,FabricaMovimiento> fabricasMovimientos;
+	
+	private int claveMovimientoLineal = 4;
+	private float puntajeElementoDefault = 1f;
+	private float velocidadElementoDefault = 1f;
+	private int cantidadMaximaElementos = 10;
+	private int framesPorElemento = 180;
 	
 	public Partida(
 			int anchoPantalla, 
@@ -41,7 +47,7 @@ public class Partida {
 		this.fabricasMovimientos = fabricasMovimientos;
 		
 		this.random = new Random();
-		this.configuraciones = new ArrayList<ConfiguracionElemento>();
+		this.puntajesElementos = new HashMap<Integer,Float>();
 		this.elementos = new ArrayList<Elemento>();
 	}
 	
@@ -61,15 +67,8 @@ public class Partida {
 		this.dificultad = dificultad;
 	}
 	
-	public void configurarElemento(int tipoElemento, int puntaje) {
-		for(Iterator<ConfiguracionElemento> it = this.configuraciones.iterator(); it.hasNext();){
-			ConfiguracionElemento ce = it.next();
-			if (ce.soyParaElemento(tipoElemento)){
-				it.remove();
-				break;
-			}
-		}
-		this.configuraciones.add(new ConfiguracionElemento(tipoElemento, puntaje));
+	public void configurarElemento(int tipoElemento, float puntaje) {
+		this.puntajesElementos.put(tipoElemento, puntaje);
 	}
 	
 	public void iniciar() throws Exception{
@@ -97,7 +96,7 @@ public class Partida {
 	private void frame(float deltaTiempo) throws Exception {
 		this.frames++;
 		
-		if (this.frames % 180 == 0 && this.elementos.size() <= 10){
+		if (this.frames % this.framesPorElemento == 0 && this.elementos.size() <= this.cantidadMaximaElementos){
 			this.frames = 0;
 			this.crearElemento(this.obtenerEnteroAlAzar(1,7));
 		}
@@ -117,66 +116,41 @@ public class Partida {
 		return this.animal.estoyMuerto();
 	}
 	
-	private void crearAnimal(int tipoAnimal) throws Exception {
-		Movimiento m = new Lineal(this.anchoPantalla, this.altoPantalla);
+	private void crearAnimal(int tipoAnimal) {
 		Posicion p = new Posicion(this.anchoPantalla/2, this.altoPantalla-20);
-		
-		FabricaAnimal fabrica = this.fabricasAnimales.getOrDefault(tipoAnimal, null);
-		
-		if(fabrica == null)
-			throw new Exception("Fabrica de animal no existe, tipoAnimal: " + tipoAnimal);
-		
-		this.animal = fabrica.Crear(m, p, this.contexto);
+		Movimiento m =  this.fabricasMovimientos.get(claveMovimientoLineal).Crear(anchoPantalla, altoPantalla);		
+		this.animal = this.fabricasAnimales.get(tipoAnimal).Crear(m, p, this.contexto);
 	}
 	
-	private void crearContexto(int tipoContexto) throws Exception {
-		FabricaContexto fabrica = this.fabricasContextos.getOrDefault(tipoContexto, null);
-		
-		if(fabrica == null)
-			throw new Exception("Fabrica de contexto no existe, tipoContexto: " + tipoContexto);
-		
-		this.contexto = fabrica.Crear();
+	private void crearContexto(int tipoContexto) {
+		this.contexto = this.fabricasContextos.get(tipoContexto).Crear();
 	}
 	
 	private void crearElemento(int tipoElemento) throws Exception {
-		float puntaje = 1;
-		if (this.existeConfiguracionElemento(tipoElemento)){
-			ConfiguracionElemento ce = this.obtenerConfiguracionElemento(tipoElemento);
-			puntaje = ce.obtenerPuntaje();
-		}
+		Movimiento movimiento = this.obtenerMovimiento();
+		Posicion posicion = new Posicion(obtenerRealAlAzar(0,this.anchoPantalla), 0);
 		
-		Movimiento m = this.obtenerMovimiento();
-		Posicion p = new Posicion(obtenerRealAlAzar(0,this.anchoPantalla), 0);
-		
-		FabricaElemento fabrica = this.fabricasElementos.getOrDefault(tipoElemento, null);
-		
-		if(fabrica == null)
-			throw new Exception("Fabrica de elemento no existe, tipoElemento: " + tipoElemento);
-		
-		float v = 1;
+		float velocidad = this.velocidadElementoDefault;
 		switch(dificultad){
 			case dificil:
-				v = v * 2;
+				velocidad = velocidad * 2;
 				break;
 			case facil:
-				v = v / 2;
+				velocidad = velocidad / 2;
 				break;
 			default:
 				break;
 		}
 		
-		this.elementos.add(fabrica.Crear(m, p, v, v, puntaje));
+		float puntaje = this.puntajesElementos.getOrDefault(tipoElemento, this.puntajeElementoDefault);
+		
+		this.elementos.add(
+				this.fabricasElementos.get(tipoElemento)
+					.Crear(movimiento, posicion, velocidad, velocidad, puntaje));
 	}
 	
 	private Movimiento obtenerMovimiento() throws Exception{
-		int tipoMovimiento = obtenerEnteroAlAzar(1,3);
-		
-		FabricaMovimiento fabrica = this.fabricasMovimientos.getOrDefault(tipoMovimiento, null);
-		
-		if(fabrica == null)
-			throw new Exception("Fabrica de movimiento no existe, tipoMovimiento: " + tipoMovimiento);
-		
-		return fabrica.Crear(this.anchoPantalla,this.altoPantalla);
+		return this.fabricasMovimientos.get(obtenerEnteroAlAzar(1,3)).Crear(this.anchoPantalla,this.altoPantalla);
 	}
 	
 	private int obtenerEnteroAlAzar(int min, int max){
@@ -187,22 +161,6 @@ public class Partida {
 		float rango = max - min + 1;
 	    float fraccion = rango * this.random.nextFloat();
 	    return fraccion + min; 
-	}
-	
-	private boolean existeConfiguracionElemento(int tipoElemento) {
-		for(ConfiguracionElemento ce : this.configuraciones){
-			if (ce.soyParaElemento(tipoElemento))
-				return true;
-		}
-		return false;
-	}
-	
-	private ConfiguracionElemento obtenerConfiguracionElemento(int tipoElemento) throws Exception {
-		for(ConfiguracionElemento ce : this.configuraciones){
-			if (ce.soyParaElemento(tipoElemento))
-				return ce;
-		}
-		throw new Exception("No existe configuracion para el elemento: " + tipoElemento);
 	}
 	
 	private void moverElementos(float deltaTiempo) {
