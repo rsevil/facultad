@@ -4,7 +4,7 @@ import java.util.*;
 
 import Modelo.Fabricas.*;
 
-public class Partida {
+public class Partida extends Observable {
 	private String nombre;
 	private Dificultad dificultad;
 	private float puntajeAcumulado;
@@ -78,6 +78,8 @@ public class Partida {
 			float deltaTiempo = (tf - ti) / 1000000000f;
 			ti = tf;
 			this.frame(deltaTiempo);
+			this.setChanged();
+			this.notifyObservers();
 		}
 	}
 	

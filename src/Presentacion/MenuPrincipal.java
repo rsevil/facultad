@@ -1,33 +1,38 @@
 package Presentacion;
 
-import java.awt.Container;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.Observable;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.event.ChangeEvent;
+import javax.swing.*;
+
+import Modelo.*;
 
 public class MenuPrincipal extends JFrame implements ActionListener {
 	
+	private static final long serialVersionUID = 1L;
+
 	private Container contenedor;
-	JLabel etiquetaTextField;
-	JLabel labelTitulo;
-	JLabel etiquetaDificultad;
-	JLabel etiquetaAnimal;
-	JLabel etiquetaContexto;
-	JButton Iniciar;
-	JButton Puntaje;
-	JButton Salir;
-	JComboBox Dificultad;
-	JComboBox Animal;
-	JComboBox Contexto;
 	
-	JTextField cajaDeTexto;
+	private JLabel lblTitulo;
+	private JLabel lblNombre;
+	private JLabel lblDificultad;
+	private JLabel lblAnimal;
+	private JLabel lblContexto;
+	
+	private JButton btnIniciar;
+	private JButton btnPuntaje;
+	private JButton btnSalir;
+	
+	private JTextField txtNombre;
+	private JComboBox<ComboBoxItem> lstDificultades;
+	private JComboBox<ComboBoxItem> lstAnimales;
+	private JComboBox<ComboBoxItem> lstContextos;
+	
+	private Juego juego;
+	
+	private final int anchoPantallaJuego = 1024;
+	private final int altoPantallaJuego = 768;
 	
 	public MenuPrincipal(){
 		iniciarComponentes();
@@ -35,118 +40,155 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 		setSize(300, 500);
 		setLocationRelativeTo(null);
 		setResizable(false);
+		
+		juego = new Juego(this.anchoPantallaJuego, this.altoPantallaJuego);
 	}
 
 	private void iniciarComponentes() {
 		contenedor=getContentPane();
 		contenedor.setLayout(null);
+		
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		labelTitulo= new JLabel();
-		labelTitulo.setText("Animales Sueltos");
-		labelTitulo.setFont(new java.awt.Font("Tahoma", 1, 20));
-		labelTitulo.setBounds(65, 15, 250, 40);
 		
-		etiquetaTextField= new JLabel();
-		etiquetaTextField.setText("Nombre: ");
-		etiquetaTextField.setBounds(50, 130, 280, 23);
+		iniciarLabels();
+		iniciarCajasDeTexto();
+		iniciarCombos();
+		iniciarBotones();
+		
+		contenedor.add(lblTitulo);
+		contenedor.add(txtNombre);
+		contenedor.add(lblNombre);
+		contenedor.add(lblDificultad);
+		contenedor.add(lstDificultades);
+		contenedor.add(lblAnimal);
+		contenedor.add(lstAnimales);
+		contenedor.add(lblContexto);
+		contenedor.add(lstContextos);
+		contenedor.add(btnPuntaje);
+		contenedor.add(btnIniciar);
+		contenedor.add(btnSalir);
+	}
+	
+	private void iniciarLabels(){
+		lblTitulo = new JLabel();
+		lblTitulo.setText("Animales Sueltos");
+		lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 20));
+		lblTitulo.setBounds(65, 15, 250, 40);
+		
+		lblNombre = new JLabel();
+		lblNombre.setText("Nombre: ");
+		lblNombre.setBounds(50, 130, 280, 23);
+		
+		lblDificultad = new JLabel();
+		lblDificultad.setText("Dificultad");
+		lblDificultad.setBounds(50, 305, 100, 23);
+		
+		lblAnimal = new JLabel();
+		lblAnimal.setText("Animal");
+		lblAnimal.setBounds(50, 185, 100, 23);
+		
+		lblContexto = new JLabel();
+		lblContexto.setText("Contexto");
+		lblContexto.setBounds(50, 245, 100, 23);
+	}
+	
+	private void iniciarCajasDeTexto(){
+		txtNombre = new JTextField();
+		txtNombre.setBounds(130, 130, 90, 23);
+	}
+	
+	private void iniciarBotones(){
+		btnIniciar = new JButton();
+		btnIniciar.setText("Iniciar Partida");
+		btnIniciar.setBounds(80, 80, 130, 23);
+		btnIniciar.addActionListener(this);
 
-		cajaDeTexto = new JTextField();
-		cajaDeTexto.setBounds(130, 130, 90, 23);
+		btnPuntaje = new JButton();
+		btnPuntaje.setText("Puntajes");
+		btnPuntaje.setBounds(80, 375, 130, 23);
+		btnPuntaje.addActionListener(this);
 		
-		Iniciar= new JButton();
-		Iniciar.setText("Iniciar Partida");
-		Iniciar.setBounds(80, 80, 130, 23);
-		Iniciar.addActionListener(this);
-
-		Puntaje= new JButton();
-		Puntaje.setText("Puntajes");
-		Puntaje.setBounds(80, 375, 130, 23);
-		Puntaje.addActionListener(this);
+		btnSalir = new JButton();
+		btnSalir.setText("Salir");
+		btnSalir.setBounds(95, 420, 100, 23);
+		btnSalir.addActionListener(this);
+	}
+	
+	private void iniciarCombos(){
+		lstDificultades = new JComboBox<ComboBoxItem>();
+		lstDificultades.addItem(new ComboBoxItem(Dificultad.facil.obtenerValor(), Dificultad.facil.toString()));
+		lstDificultades.addItem(new ComboBoxItem(Dificultad.medio.obtenerValor(), Dificultad.medio.toString()));
+		lstDificultades.addItem(new ComboBoxItem(Dificultad.dificil.obtenerValor(), Dificultad.dificil.toString()));
+		lstDificultades.setBounds(130, 305, 100, 23);
+		lstDificultades.setSelectedIndex(0);
 		
-		Salir= new JButton();
-		Salir.setText("Salir");
-		Salir.setBounds(95, 420, 100, 23);
-		Salir.addActionListener(this);
+		lstAnimales = new JComboBox<ComboBoxItem>();
+		lstAnimales.addItem(new ComboBoxItem(1, "Ave"));
+		lstAnimales.addItem(new ComboBoxItem(2, "Reptil"));
+		lstAnimales.addItem(new ComboBoxItem(3, "Mamifero"));
+		lstAnimales.setBounds(130, 185, 100, 23);
+		lstAnimales.setSelectedIndex(0);
 		
-		etiquetaDificultad= new JLabel();
-		etiquetaDificultad.setText("Dificultad");
-		etiquetaDificultad.setBounds(50, 305, 100, 23);
-		
-		Dificultad = new JComboBox();
-		Dificultad.addItem("Facil");
-		Dificultad.addItem("Medio");
-		Dificultad.addItem("Dificil");
-		Dificultad.setBounds(130, 305, 100, 23);
-		Dificultad.setSelectedIndex(0);
-		
-		etiquetaAnimal= new JLabel();
-		etiquetaAnimal.setText("Animal");
-		etiquetaAnimal.setBounds(50, 185, 100, 23);
-		
-		Animal = new JComboBox();
-		Animal.addItem("Reptil");
-		Animal.addItem("Mamifero");
-		Animal.addItem("Ave");
-		Animal.setBounds(130, 185, 100, 23);
-		Animal.setSelectedIndex(0);
-		
-		etiquetaContexto= new JLabel();
-		etiquetaContexto.setText("Contexto");
-		etiquetaContexto.setBounds(50, 245, 100, 23);
-		
-		Contexto = new JComboBox();
-		Contexto.addItem("Agua");
-		Contexto.addItem("Aire");
-		Contexto.addItem("Tierra");
-		Contexto.setBounds(130, 245, 100, 23);
-		Contexto.setSelectedIndex(0);
-		
-
-		contenedor.add(labelTitulo);
-		contenedor.add(cajaDeTexto);
-		contenedor.add(etiquetaTextField);
-		contenedor.add(etiquetaDificultad);
-		contenedor.add(Dificultad);
-		contenedor.add(etiquetaAnimal);
-		contenedor.add(Animal);
-		contenedor.add(etiquetaContexto);
-		contenedor.add(Contexto);
-		contenedor.add(Puntaje);
-		contenedor.add(Iniciar);
-		contenedor.add(Salir);
+		lstContextos = new JComboBox<ComboBoxItem>();
+		lstContextos.addItem(new ComboBoxItem(1, "Aire"));
+		lstContextos.addItem(new ComboBoxItem(2, "Tierra"));
+		lstContextos.addItem(new ComboBoxItem(3, "Agua"));
+		lstContextos.setBounds(130, 245, 100, 23);
+		lstContextos.setSelectedIndex(0);
 	}
 	
 	public void actionPerformed(ActionEvent evento) {
-		if (evento.getSource()==Iniciar)
+		if (evento.getSource()==btnIniciar)
 		{
-			// TODO programar para que abra otra ventana y empiece el juego
-			
-			// Partida p = juego.nuevaPartida()
-			// p.elegirNombre(cajaDeTexto.Text)
-			// p.elegirAnimal(animal)
-			// p.elegirDificultad(...)
-			// p.elegirContexto(...)
-			// p.configurarElemento(tipoElemento,puntos)
-			// p.configurarElemento(tipoElemento2,puntos)
-			// p.configurarElemento(tipoElemento3,puntos)
-			// p.configurarElemento(tipoElemento4,puntos)
-			// p.configurarElemento(tipoElemento5,puntos)
-			// ..
-			// p.iniciar()
+			iniciarPartida();
 		}
-		if(evento.getSource()==Puntaje){
-			// TODO programar para que muestre lista de puntajes			
+		if(evento.getSource()==btnPuntaje){
+			obtenerPuntajes();			
 		}
-		if(evento.getSource()==Salir){
+		if(evento.getSource()==btnSalir){
 			System.exit(0);
 		}
 	}
 	
-	private String validaEvento() {
-		String cad="Seleccionados : \n";
-		cad+=Dificultad.getSelectedItem()+"\n";
-		cad+=Animal.getSelectedItem()+"\n";
-		cad+=Contexto.getSelectedItem()+"\n";
-		return cad;
+	private void iniciarPartida(){
+		try{
+			validarIniciar();
+			
+			Partida partida = juego.nuevaPartida();
+			partida.elegirNombre(txtNombre.getText());
+			partida.elegirAnimal(lstAnimales.getItemAt(lstAnimales.getSelectedIndex()).obtenerValor());
+			partida.elegirDificultad(Dificultad.obtenerDificultad(lstDificultades.getItemAt(lstDificultades.getSelectedIndex()).obtenerValor()));
+			partida.elegirContexto(lstContextos.getItemAt(lstContextos.getSelectedIndex()).obtenerValor());
+			// p.configurarElemento(tipoElemento,puntos)
+			// ...
+			
+			JFrame frame = new JFrame("Partida");
+			PantallaPartida pantallaPartida = new PantallaPartida(partida, this.altoPantallaJuego, this.anchoPantallaJuego);
+			frame.add(pantallaPartida);
+//			frame.setSize(this.altoPantallaJuego, this.anchoPantallaJuego);
+			frame.setVisible(true);
+			frame.setResizable(false);
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.pack();
+			frame.addWindowListener(new WindowAdapter() {
+				public void windowClosing(WindowEvent e) {
+					partida.deleteObservers();
+				}
+			});
+			
+		}catch(Exception ex){
+			JOptionPane.showMessageDialog(this, ex.getMessage());
+		}
+	}
+	
+	private void obtenerPuntajes(){
+		// TODO: En un popupsito mostrar una tabla con los 10 
+		// primeros puntajes ordenados de mayor a menor
+		juego.obtenerPuntajes();
+	}
+	
+	private void validarIniciar() throws Exception {
+		if (txtNombre.getText() == null)
+			throw new Exception("El campo \"Nombre\" no puede estar vacio");
 	}
 }
