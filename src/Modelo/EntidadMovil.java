@@ -7,11 +7,15 @@ public abstract class EntidadMovil {
 	protected int ancho;
 	protected int alto;
 	
+	protected Posicion posicionAnterior;
+	
 	public EntidadMovil(Movimiento movimiento, Posicion posicion, int ancho, int alto) {
 		this.movimiento = movimiento;
 		this.posicion = posicion;
 		this.ancho = ancho;
 		this.alto = alto;
+		
+		this.posicionAnterior = posicion;
 	}
 	
 	public EntidadMovil(Movimiento movimiento, Posicion posicion, int ancho){
@@ -23,6 +27,7 @@ public abstract class EntidadMovil {
 	protected abstract float obtenerVY();
 	
 	protected void mover(float deltaTiempo){
+		this.posicionAnterior = this.posicion;
 		this.posicion = 
 				this.movimiento.calcularPosicion(
 						this.obtenerVX(), 
@@ -34,7 +39,19 @@ public abstract class EntidadMovil {
 						this.posicion.obtenerY() + this.alto);
 	}
 	
-//	public void dibujar(Graphics2D g2d) {
-//		g2d.drawImage(this.icon, (int)posicion.obtenerX(), (int)posicion.obtenerY(), this.ancho, this.alto, null);
-//	}
+	public boolean vaHaciaLaDerecha(){
+		return this.posicion.obtenerX() - this.posicionAnterior.obtenerX() >= 0; 
+	}
+	
+	public Posicion obtenerPosicion(){
+		return this.posicion;
+	}
+	
+	public int obtenerAncho(){
+		return this.ancho;
+	}
+	
+	public int obtenerAlto(){
+		return this.alto;
+	}
 }

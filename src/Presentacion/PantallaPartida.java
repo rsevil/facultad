@@ -2,7 +2,10 @@ package Presentacion;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Observable;
 
 import javax.swing.*;
@@ -66,6 +69,35 @@ public class PantallaPartida extends JPanel {
 	public void paint(Graphics g){
 		super.paint(g);
 		
+		Collection<Graficable> graficables = new ArrayList<Graficable>();
 		
+		Animal animal = partida.obtenerAnimal();
+		Collection<Elemento> elementos = partida.obtenerElementos();
+		Contexto contexto = partida.obtenerContexto();
+		Puntaje puntaje = partida.obtenerPuntaje();
+	
+		graficables.add(
+				new TextoGraficable((Graphics2D)g, 10, 10, puntaje.obtenerNombre() + ": " + puntaje.obtenerPuntos()));
+		
+		graficables.add(crearGraficable(g, animal));
+		
+		for(Elemento e : elementos)
+			graficables.add(crearGraficable(g, e));
+		
+		graficables.add(
+				new IconoGraficable((Graphics2D)g, 0, 0, this.getSize().width, this.getSize().height, contexto.getClass().getName()));
+		
+		for(Graficable gr : graficables)
+			gr.Graficar();
+	}
+	
+	private IconoGraficable crearGraficable(Graphics graficos, EntidadMovil entidad){
+		return new IconoGraficable(
+				(Graphics2D)graficos, 
+				entidad.obtenerPosicion().obtenerX(), 
+				entidad.obtenerPosicion().obtenerY(), 
+				entidad.obtenerAncho(), 
+				entidad.obtenerAlto(), 
+				entidad.getClass().getName());
 	}
 }

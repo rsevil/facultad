@@ -94,6 +94,18 @@ public class Partida extends Observable {
 	public void asignarIzquierda(boolean izquierda){
 		this.izquierda = izquierda;
 	}
+
+	public Animal obtenerAnimal(){
+		return this.animal;
+	}
+	
+	public Contexto obtenerContexto(){
+		return this.contexto;
+	}
+	
+	public Collection<Elemento> obtenerElementos(){
+		return this.elementos;
+	}
 	
 	private void frame(float deltaTiempo) throws Exception {
 		this.frames++;
