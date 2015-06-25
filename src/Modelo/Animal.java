@@ -6,9 +6,10 @@ public abstract class Animal extends EntidadMovil {
 	private boolean derecha;
 	private boolean izquierda;
 	
-	public Animal(Movimiento movimiento, Posicion posicion, Contexto contexto){
-		super(movimiento, posicion, 4);
+	public Animal(Movimiento movimiento, Posicion posicion, Contexto contexto, float vidaInicial){
+		super(movimiento, posicion, Constantes.TAMANO_LADO_ANIMAL);
 		this.contexto = contexto;
+		this.vida = vidaInicial;
 	}
 	
 	void moverAnimal(float deltaTiempo, boolean derecha, boolean izquierda){
@@ -21,12 +22,13 @@ public abstract class Animal extends EntidadMovil {
 	
 	@Override
 	protected float obtenerVX(){
-		return this.transformarVelocidad(this.calcularVelocidad(), this.derecha, this.izquierda);
+		return Constantes.VELOCIDAD_ANIMAL_DEFAULT * 
+				this.transformarVelocidad(this.calcularVelocidad(), this.derecha, this.izquierda);
 	}
 	
 	@Override
 	protected float obtenerVY(){
-		return this.transformarVelocidad(this.calcularVelocidad(), false, false);
+		return 0;
 	}
 	
 	void calcularPuntaje(Elemento elemento){
@@ -41,7 +43,7 @@ public abstract class Animal extends EntidadMovil {
 	
 	abstract void calcularVida(Elemento elemento);
 	
-	float obtenerVida() {
+	public float obtenerVida() {
 		return this.vida;
 	}
 	

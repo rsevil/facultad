@@ -7,7 +7,7 @@ public abstract class Elemento extends EntidadMovil {
 	private float vy;
 	
 	public Elemento(Movimiento movimiento, Posicion posicion, float vx, float vy, float puntaje) {
-		super(movimiento, posicion, 4);
+		super(movimiento, posicion, Constantes.TAMANO_LADO_ELEMENTO);
 		this.puntaje = puntaje;
 		this.vx = vx;
 		this.vy = vy;

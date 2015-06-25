@@ -26,6 +26,6 @@ public class Diagonal extends Movimiento {
 		
 		return new Posicion(
 				limites(xi + vx * deltaTiempo, 0, this.anchoPantalla - (xf - xi)),
-				limites(yi + vy * deltaTiempo, 0, this.altoPantalla - (yf - yi)));
+				yi + vy * deltaTiempo);
 	}
 }

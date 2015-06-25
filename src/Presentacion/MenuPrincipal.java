@@ -2,8 +2,6 @@ package Presentacion;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Observable;
-
 import javax.swing.*;
 
 import Modelo.*;
@@ -31,8 +29,8 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 	
 	private Juego juego;
 	
-	private final int anchoPantallaJuego = 1024;
-	private final int altoPantallaJuego = 768;
+	private final int anchoPantallaJuego = 400;
+	private final int altoPantallaJuego = 600;
 	
 	public MenuPrincipal(){
 		iniciarComponentes();
@@ -41,131 +39,127 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 		setLocationRelativeTo(null);
 		setResizable(false);
 		
-		juego = new Juego(this.anchoPantallaJuego, this.altoPantallaJuego);
+		this.juego = new Juego(this.anchoPantallaJuego, this.altoPantallaJuego);
 	}
 
 	private void iniciarComponentes() {
-		contenedor=getContentPane();
-		contenedor.setLayout(null);
+		this.contenedor=getContentPane();
+		this.contenedor.setLayout(null);
 		
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-		iniciarLabels();
-		iniciarCajasDeTexto();
-		iniciarCombos();
-		iniciarBotones();
+		this.iniciarLabels();
+		this.iniciarCajasDeTexto();
+		this.iniciarCombos();
+		this.iniciarBotones();
 		
-		contenedor.add(lblTitulo);
-		contenedor.add(txtNombre);
-		contenedor.add(lblNombre);
-		contenedor.add(lblDificultad);
-		contenedor.add(lstDificultades);
-		contenedor.add(lblAnimal);
-		contenedor.add(lstAnimales);
-		contenedor.add(lblContexto);
-		contenedor.add(lstContextos);
-		contenedor.add(btnPuntaje);
-		contenedor.add(btnIniciar);
-		contenedor.add(btnSalir);
+		this.contenedor.add(lblTitulo);
+		this.contenedor.add(txtNombre);
+		this.contenedor.add(lblNombre);
+		this.contenedor.add(lblDificultad);
+		this.contenedor.add(lstDificultades);
+		this.contenedor.add(lblAnimal);
+		this.contenedor.add(lstAnimales);
+		this.contenedor.add(lblContexto);
+		this.contenedor.add(lstContextos);
+		this.contenedor.add(btnPuntaje);
+		this.contenedor.add(btnIniciar);
+		this.contenedor.add(btnSalir);
 	}
 	
 	private void iniciarLabels(){
-		lblTitulo = new JLabel();
-		lblTitulo.setText("Animales Sueltos");
-		lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 20));
-		lblTitulo.setBounds(65, 15, 250, 40);
+		this.lblTitulo = new JLabel();
+		this.lblTitulo.setText("Animales Sueltos");
+		this.lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 20));
+		this.lblTitulo.setBounds(65, 15, 250, 40);
 		
-		lblNombre = new JLabel();
-		lblNombre.setText("Nombre: ");
-		lblNombre.setBounds(50, 130, 280, 23);
+		this.lblNombre = new JLabel();
+		this.lblNombre.setText("Nombre: ");
+		this.lblNombre.setBounds(50, 130, 280, 23);
 		
-		lblDificultad = new JLabel();
-		lblDificultad.setText("Dificultad");
-		lblDificultad.setBounds(50, 305, 100, 23);
+		this.lblDificultad = new JLabel();
+		this.lblDificultad.setText("Dificultad");
+		this.lblDificultad.setBounds(50, 305, 100, 23);
 		
-		lblAnimal = new JLabel();
-		lblAnimal.setText("Animal");
-		lblAnimal.setBounds(50, 185, 100, 23);
+		this.lblAnimal = new JLabel();
+		this.lblAnimal.setText("Animal");
+		this.lblAnimal.setBounds(50, 185, 100, 23);
 		
-		lblContexto = new JLabel();
-		lblContexto.setText("Contexto");
-		lblContexto.setBounds(50, 245, 100, 23);
+		this.lblContexto = new JLabel();
+		this.lblContexto.setText("Contexto");
+		this.lblContexto.setBounds(50, 245, 100, 23);
 	}
 	
 	private void iniciarCajasDeTexto(){
-		txtNombre = new JTextField();
-		txtNombre.setBounds(130, 130, 90, 23);
+		this.txtNombre = new JTextField();
+		this.txtNombre.setBounds(130, 130, 90, 23);
 	}
 	
 	private void iniciarBotones(){
-		btnIniciar = new JButton();
-		btnIniciar.setText("Iniciar Partida");
-		btnIniciar.setBounds(80, 80, 130, 23);
-		btnIniciar.addActionListener(this);
+		this.btnIniciar = new JButton();
+		this.btnIniciar.setText("Iniciar Partida");
+		this.btnIniciar.setBounds(80, 80, 130, 23);
+		this.btnIniciar.addActionListener(this);
 
-		btnPuntaje = new JButton();
-		btnPuntaje.setText("Puntajes");
-		btnPuntaje.setBounds(80, 375, 130, 23);
-		btnPuntaje.addActionListener(this);
+		this.btnPuntaje = new JButton();
+		this.btnPuntaje.setText("Puntajes");
+		this.btnPuntaje.setBounds(80, 375, 130, 23);
+		this.btnPuntaje.addActionListener(this);
 		
-		btnSalir = new JButton();
-		btnSalir.setText("Salir");
-		btnSalir.setBounds(95, 420, 100, 23);
-		btnSalir.addActionListener(this);
+		this.btnSalir = new JButton();
+		this.btnSalir.setText("Salir");
+		this.btnSalir.setBounds(95, 420, 100, 23);
+		this.btnSalir.addActionListener(this);
 	}
 	
 	private void iniciarCombos(){
-		lstDificultades = new JComboBox<ComboBoxItem>();
-		lstDificultades.addItem(new ComboBoxItem(Dificultad.facil.obtenerValor(), Dificultad.facil.toString()));
-		lstDificultades.addItem(new ComboBoxItem(Dificultad.medio.obtenerValor(), Dificultad.medio.toString()));
-		lstDificultades.addItem(new ComboBoxItem(Dificultad.dificil.obtenerValor(), Dificultad.dificil.toString()));
-		lstDificultades.setBounds(130, 305, 100, 23);
-		lstDificultades.setSelectedIndex(0);
+		this.lstDificultades = new JComboBox<ComboBoxItem>();
+		this.lstDificultades.addItem(new ComboBoxItem(Dificultad.facil));
+		this.lstDificultades.addItem(new ComboBoxItem(Dificultad.medio));
+		this.lstDificultades.addItem(new ComboBoxItem(Dificultad.dificil));
+		this.lstDificultades.setBounds(130, 305, 100, 23);
+		this.lstDificultades.setSelectedIndex(0);
 		
-		lstAnimales = new JComboBox<ComboBoxItem>();
-		lstAnimales.addItem(new ComboBoxItem(1, "Ave"));
-		lstAnimales.addItem(new ComboBoxItem(2, "Reptil"));
-		lstAnimales.addItem(new ComboBoxItem(3, "Mamifero"));
-		lstAnimales.setBounds(130, 185, 100, 23);
-		lstAnimales.setSelectedIndex(0);
+		this.lstAnimales = new JComboBox<ComboBoxItem>();
+		this.lstAnimales.addItem(new ComboBoxItem(1, "Ave"));
+		this.lstAnimales.addItem(new ComboBoxItem(2, "Reptil"));
+		this.lstAnimales.addItem(new ComboBoxItem(3, "Mamifero"));
+		this.lstAnimales.setBounds(130, 185, 100, 23);
+		this.lstAnimales.setSelectedIndex(0);
 		
-		lstContextos = new JComboBox<ComboBoxItem>();
-		lstContextos.addItem(new ComboBoxItem(1, "Aire"));
-		lstContextos.addItem(new ComboBoxItem(2, "Tierra"));
-		lstContextos.addItem(new ComboBoxItem(3, "Agua"));
-		lstContextos.setBounds(130, 245, 100, 23);
-		lstContextos.setSelectedIndex(0);
+		this.lstContextos = new JComboBox<ComboBoxItem>();
+		this.lstContextos.addItem(new ComboBoxItem(1, "Aire"));
+		this.lstContextos.addItem(new ComboBoxItem(2, "Tierra"));
+		this.lstContextos.addItem(new ComboBoxItem(3, "Agua"));
+		this.lstContextos.setBounds(130, 245, 100, 23);
+		this.lstContextos.setSelectedIndex(0);
 	}
 	
-	public void actionPerformed(ActionEvent evento) {
-		if (evento.getSource()==btnIniciar)
-		{
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource()==btnIniciar)
 			iniciarPartida();
-		}
-		if(evento.getSource()==btnPuntaje){
+		if(e.getSource()==btnPuntaje)
 			obtenerPuntajes();			
-		}
-		if(evento.getSource()==btnSalir){
+		if(e.getSource()==btnSalir)
 			System.exit(0);
-		}
 	}
 	
 	private void iniciarPartida(){
 		try{
-			validarIniciar();
+			this.validarIniciar();
 			
 			Partida partida = juego.nuevaPartida();
 			partida.elegirNombre(txtNombre.getText());
+			partida.elegirContexto(lstContextos.getItemAt(lstContextos.getSelectedIndex()).obtenerValor());
 			partida.elegirAnimal(lstAnimales.getItemAt(lstAnimales.getSelectedIndex()).obtenerValor());
 			partida.elegirDificultad(Dificultad.obtenerDificultad(lstDificultades.getItemAt(lstDificultades.getSelectedIndex()).obtenerValor()));
-			partida.elegirContexto(lstContextos.getItemAt(lstContextos.getSelectedIndex()).obtenerValor());
 			// p.configurarElemento(tipoElemento,puntos)
 			// ...
 			
 			JFrame frame = new JFrame("Partida");
-			PantallaPartida pantallaPartida = new PantallaPartida(partida, this.altoPantallaJuego, this.anchoPantallaJuego);
+			PantallaPartida pantallaPartida = new PantallaPartida(partida, this.anchoPantallaJuego, this.altoPantallaJuego);
 			frame.add(pantallaPartida);
-//			frame.setSize(this.altoPantallaJuego, this.anchoPantallaJuego);
+			frame.setSize(this.altoPantallaJuego, this.anchoPantallaJuego);
 			frame.setVisible(true);
 			frame.setResizable(false);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -175,6 +169,8 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 					partida.deleteObservers();
 				}
 			});
+			
+			pantallaPartida.iniciarPartida();
 			
 		}catch(Exception ex){
 			JOptionPane.showMessageDialog(this, ex.getMessage());

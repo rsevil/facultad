@@ -4,16 +4,16 @@ public class Aire extends Contexto {
 	
 	@Override
 	float calcularVelocidad(Mamifero m) {
-		return (float)0.75;
+		return Constantes.MULTIPLICADOR_VELOCIDAD_ANIMAL_CONTEXTO_NORMAL;
 	}
 	
 	@Override
 	float calcularVelocidad(Ave a) {
-		return (float)1;
+		return Constantes.MULTIPLICADOR_VELOCIDAD_ANIMAL_CONTEXTO_FAVORABLE;
 	}
 	
 	@Override
 	float calcularVelocidad(Reptil r) {
-		return (float)0.5;
+		return Constantes.MULTIPLICADOR_VELOCIDAD_ANIMAL_CONTEXTO_NO_FAVORABLE;
 	}
 }

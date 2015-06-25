@@ -7,16 +7,16 @@ public class Lata extends Danino {
 
 	@Override
 	float calcularDano(Mamifero m) {
-		return super.puntaje*1.25f;
+		return super.puntaje * Constantes.MULTIPLICADOR_PUNTAJE_ELEMENTO_ALTO;
 	}
 	
 	@Override
 	float calcularDano(Ave a) {
-		return super.puntaje;
+		return super.puntaje * Constantes.MULTIPLICADOR_PUNTAJE_ELEMENTO_NORMAL;
 	}
 	
 	@Override
 	float calcularDano(Reptil r) {
-		return super.puntaje*0.75f;
+		return super.puntaje * Constantes.MULTIPLICADOR_PUNTAJE_ELEMENTO_BAJO;
 	}
 }

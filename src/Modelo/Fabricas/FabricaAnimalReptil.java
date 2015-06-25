@@ -8,8 +8,8 @@ import Modelo.Reptil;
 
 public class FabricaAnimalReptil extends FabricaAnimal {
 
-	public Animal Crear(Movimiento movimiento, Posicion posicion, Contexto contexto) {
-		return new Reptil(movimiento,posicion,contexto);
+	public Animal Crear(Movimiento movimiento, Posicion posicion, Contexto contexto, float vidaInicial) {
+		return new Reptil(movimiento,posicion,contexto,vidaInicial);
 	}
 
 }

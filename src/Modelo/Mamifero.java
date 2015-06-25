@@ -1,8 +1,8 @@
 package Modelo;
 
 public class Mamifero extends Animal {
-	public Mamifero(Movimiento movimiento, Posicion posicion, Contexto contexto){
-		super(movimiento, posicion, contexto);
+	public Mamifero(Movimiento movimiento, Posicion posicion, Contexto contexto, float vidaInicial){
+		super(movimiento, posicion, contexto, vidaInicial);
 	}
 	
 	@Override

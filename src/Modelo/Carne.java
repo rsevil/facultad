@@ -7,16 +7,16 @@ public class Carne extends Benefico {
 
 	@Override
 	float calcularBeneficio(Mamifero m) {
-		return super.puntaje*1.25f;
+		return super.puntaje * Constantes.MULTIPLICADOR_PUNTAJE_ELEMENTO_ALTO;
 	}
 	
 	@Override
 	float calcularBeneficio(Ave a) {
-		return super.puntaje;
+		return super.puntaje * Constantes.MULTIPLICADOR_PUNTAJE_ELEMENTO_BAJO;
 	}
 	
 	@Override
 	float calcularBeneficio(Reptil r) {
-		return super.puntaje*0.75f;
+		return super.puntaje * Constantes.MULTIPLICADOR_PUNTAJE_ELEMENTO_NORMAL;
 	}
 }

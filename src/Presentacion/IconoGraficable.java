@@ -6,8 +6,8 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class IconoGraficable extends Graficable {
-	protected int ancho;
-	protected int alto;
+	private int ancho;
+	private int alto;
 	private Image image;
 	
 	public IconoGraficable(Graphics2D graficos, float x, float y, int ancho, int alto, String nombreImagen) {
@@ -19,7 +19,8 @@ public class IconoGraficable extends Graficable {
 	
 	@Override
 	public void Graficar(){
-		graficos.drawImage(image, (int)x, (int)y, ancho, alto, null);
+		//graficos.drawImage(image, (int)x, (int)y, ancho, alto, null);
+		graficos.fillRect((int)x, (int)y, ancho, alto);
 	}
 
 }

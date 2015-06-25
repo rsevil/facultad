@@ -24,12 +24,14 @@ public class PantallaPartida extends JPanel {
 		this.iniciarDirecciones();
 		this.iniciarObservadores();
 		this.setFocusable(true);
-		
+	}
+	
+	public void iniciarPartida(){
 		new Thread(() -> {
 			try {
 				partida.iniciar();
-			} catch (Exception e) {
-				e.printStackTrace();
+			} catch (Exception ex) {
+				JOptionPane.showMessageDialog(this, ex.getMessage());
 			}
 		}).start();
 	}
@@ -70,22 +72,17 @@ public class PantallaPartida extends JPanel {
 		super.paint(g);
 		
 		Collection<Graficable> graficables = new ArrayList<Graficable>();
+				
+		//graficables.add(new IconoGraficable((Graphics2D)g, 0, 0, this.getSize().width, this.getSize().height, partida.obtenerContexto().getClass().getName()));
 		
 		Animal animal = partida.obtenerAnimal();
-		Collection<Elemento> elementos = partida.obtenerElementos();
-		Contexto contexto = partida.obtenerContexto();
 		Puntaje puntaje = partida.obtenerPuntaje();
-	
-		graficables.add(
-				new TextoGraficable((Graphics2D)g, 10, 10, puntaje.obtenerNombre() + ": " + puntaje.obtenerPuntos()));
+		graficables.add(new TextoGraficable((Graphics2D)g, 10, 10, String.format("%s - Vida: %.0f, Puntaje: %.2f", puntaje.obtenerNombre(), animal.obtenerVida(), puntaje.obtenerPuntos())));
 		
-		graficables.add(crearGraficable(g, animal));
-		
-		for(Elemento e : elementos)
+		for(Elemento e : partida.obtenerElementos())
 			graficables.add(crearGraficable(g, e));
 		
-		graficables.add(
-				new IconoGraficable((Graphics2D)g, 0, 0, this.getSize().width, this.getSize().height, contexto.getClass().getName()));
+		graficables.add(crearGraficable(g, animal));
 		
 		for(Graficable gr : graficables)
 			gr.Graficar();

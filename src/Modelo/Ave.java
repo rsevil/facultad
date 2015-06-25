@@ -1,8 +1,8 @@
 package Modelo;
 
 public class Ave extends Animal {
-	public Ave(Movimiento movimiento, Posicion posicion, Contexto contexto){
-		super(movimiento, posicion, contexto);
+	public Ave(Movimiento movimiento, Posicion posicion, Contexto contexto, float vidaInicial){
+		super(movimiento, posicion, contexto, vidaInicial);
 	}
 	
 	@Override

@@ -1,8 +1,8 @@
 package Modelo;
 
 public class Reptil extends Animal {
-	public Reptil(Movimiento movimiento, Posicion posicion, Contexto contexto){
-		super(movimiento, posicion, contexto);
+	public Reptil(Movimiento movimiento, Posicion posicion, Contexto contexto, float vidaInicial){
+		super(movimiento, posicion, contexto, vidaInicial);
 	}
 	
 	@Override

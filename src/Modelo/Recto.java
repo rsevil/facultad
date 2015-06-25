@@ -10,6 +10,6 @@ public class Recto extends Movimiento {
 	public Posicion calcularPosicion(float vx, float vy, float deltaTiempo, float xi, float xf, float yi, float yf) {
 		return new Posicion(
 				xi,
-				limites(yi + vy * deltaTiempo, 0, this.altoPantalla - (yf - yi)));
+				yi + vy * deltaTiempo);
 	}
 }
