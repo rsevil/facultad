@@ -14,13 +14,12 @@ public class IconoGraficable extends Graficable {
 		super(graficos, x, y);
 		this.ancho = ancho;
 		this.alto = alto;
-		this.image = new ImageIcon(nombreImagen + ".png").getImage();
+		this.image = new ImageIcon(getClass().getResource("imgs//" + nombreImagen)).getImage();
 	}
 	
 	@Override
 	public void Graficar(){
-		//graficos.drawImage(image, (int)x, (int)y, ancho, alto, null);
-		graficos.fillRect((int)x, (int)y, ancho, alto);
+		graficos.drawImage(image, (int)x, (int)y, ancho, alto, null);
 	}
 
 }

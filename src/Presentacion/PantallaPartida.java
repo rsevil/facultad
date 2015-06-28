@@ -3,10 +3,12 @@ package Presentacion;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Observable;
+import javax.swing.ImageIcon;
 
 import javax.swing.*;
 
@@ -63,7 +65,11 @@ public class PantallaPartida extends JPanel {
 	private void iniciarObservadores(){
 		this.partida.addObserver((Observable obj, Object arg) -> {
 			SwingUtilities.invokeLater(() -> {
-				this.repaint();
+				try{
+					this.repaint();
+				}catch(Exception ex){
+					JOptionPane.showMessageDialog(this, ex.getMessage());
+				}
 			});
 		});
 	}
@@ -71,30 +77,47 @@ public class PantallaPartida extends JPanel {
 	public void paint(Graphics g){
 		super.paint(g);
 		
+		Graphics2D g2d = (Graphics2D)g; 
 		Collection<Graficable> graficables = new ArrayList<Graficable>();
-				
-		//graficables.add(new IconoGraficable((Graphics2D)g, 0, 0, this.getSize().width, this.getSize().height, partida.obtenerContexto().getClass().getName()));
+		
+		graficables.add(
+				new IconoGraficable(
+						g2d, 0, 0, 
+						this.getWidth(), 
+						this.getHeight(), 
+						this.obtenerNombreImagen(partida.obtenerContexto())));
 		
 		Animal animal = partida.obtenerAnimal();
 		Puntaje puntaje = partida.obtenerPuntaje();
-		graficables.add(new TextoGraficable((Graphics2D)g, 10, 10, String.format("%s - Vida: %.2f, Puntaje: %.2f", puntaje.obtenerNombre(), animal.obtenerVida(), puntaje.obtenerPuntos())));
+		graficables.add(
+				new TextoGraficable(
+						g2d, 10, 10, 
+						String.format(
+								"%s - Vida: %.2f, Puntaje: %.2f", 
+								puntaje.obtenerNombre(), 
+								animal.obtenerVida(), 
+								puntaje.obtenerPuntos())));
+		
+		graficables.add(crearGraficable(g2d, animal));
 		
 		for(Elemento e : partida.obtenerElementos())
-			graficables.add(crearGraficable(g, e));
-		
-		graficables.add(crearGraficable(g, animal));
+			graficables.add(crearGraficable(g2d, e));
 		
 		for(Graficable gr : graficables)
 			gr.Graficar();
 	}
 	
-	private IconoGraficable crearGraficable(Graphics graficos, EntidadMovil entidad){
+	private IconoGraficable crearGraficable(Graphics2D graficos, EntidadMovil entidad){
 		return new IconoGraficable(
-				(Graphics2D)graficos, 
+				graficos, 
 				entidad.obtenerPosicion().obtenerX(), 
 				entidad.obtenerPosicion().obtenerY(), 
 				entidad.obtenerAncho(), 
 				entidad.obtenerAlto(), 
-				entidad.getClass().getName());
+				this.obtenerNombreImagen(entidad));
+	}
+	
+	private String obtenerNombreImagen(Object o){
+		return o.getClass().getName().replaceAll("Modelo.", "").toLowerCase() + ".png";
 	}
 }

@@ -28,6 +28,6 @@ class Constantes {
 	static final float VELOCIDAD_X_ELEMENTO_DEFAULT = 80;
 	static final float VELOCIDAD_Y_ELEMENTO_DEFAULT = 100;
 	
-	static final int TAMANO_LADO_ANIMAL = 30;
-	static final int TAMANO_LADO_ELEMENTO = 20;
+	static final int TAMANO_LADO_ANIMAL = 50;
+	static final int TAMANO_LADO_ELEMENTO = 40;
 }
