@@ -2,6 +2,8 @@ package Modelo;
 
 import java.util.*;
 
+import javax.swing.JFrame;
+
 import Modelo.Fabricas.*;
 
 public class Partida extends Observable {
@@ -74,6 +76,8 @@ public class Partida extends Observable {
 			this.notifyObservers();
 			Thread.sleep((long)fps);
 		}
+		if(terminada())
+			System.exit(0);
 	}
 
 	public Puntaje obtenerPuntaje() {
