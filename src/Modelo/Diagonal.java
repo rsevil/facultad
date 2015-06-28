@@ -16,7 +16,7 @@ public class Diagonal extends Movimiento {
 		if (this.derecha && xf >= anchoPantalla){
 			this.derecha = false;
 			this.izquierda = true;
-		}else if (this.izquierda && xf <= anchoPantalla){
+		}else if (this.izquierda && xi <= 0){
 			this.izquierda = false;
 			this.derecha = true;
 		}

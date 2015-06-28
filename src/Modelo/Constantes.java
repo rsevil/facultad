@@ -1,11 +1,14 @@
 package Modelo;
 
 class Constantes {
+	
+	static final int FRAMES_POR_ELEMENTO = 150;
+	static final int FRAMES_POR_SEGUNDO = 60;
+	
 	static final int CLAVE_MOVIMIENTO_LINEAL = 4;
 	
-	static final int CANTIDAD_MAXIMA_ELEMENTOS = 7;
-	static final int FRAMES_POR_ELEMENTO = 120;
-	static final float VELOCIDAD_ANIMAL_DEFAULT = 20;
+	static final int CANTIDAD_MAXIMA_ELEMENTOS = 10;
+	static final float VELOCIDAD_ANIMAL_DEFAULT = 40;
 	
 	static final float MULTIPLICADOR_VELOCIDAD_ANIMAL_CONTEXTO_FAVORABLE = 2;
 	static final float MULTIPLICADOR_VELOCIDAD_ANIMAL_CONTEXTO_NORMAL = 1;
@@ -20,9 +23,11 @@ class Constantes {
 	static final float MULTIPLICADOR_VELOCIDAD_ELEMENTO_FACIL = 0.5f;
 	
 	static final float VIDA_INICIAL_ANIMAL = 10;
-	static final float PUNTAJE_ELEMENTO_DEFAULT = 1;
-	static final float VELOCIDAD_ELEMENTO_DEFAULT = 40;
+	static final float PUNTAJE_ELEMENTO_DEFAULT = 5;
 	
-	static final int TAMANO_LADO_ANIMAL = 20;
+	static final float VELOCIDAD_X_ELEMENTO_DEFAULT = 80;
+	static final float VELOCIDAD_Y_ELEMENTO_DEFAULT = 100;
+	
+	static final int TAMANO_LADO_ANIMAL = 30;
 	static final int TAMANO_LADO_ELEMENTO = 20;
 }

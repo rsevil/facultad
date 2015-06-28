@@ -63,6 +63,7 @@ public class Partida extends Observable {
 	}
 
 	public void iniciar() throws Exception {
+		float fps = 1000 / Constantes.FRAMES_POR_SEGUNDO;
 		long ti = System.nanoTime();
 		while (!terminada()) {
 			long tf = System.nanoTime();
@@ -71,7 +72,7 @@ public class Partida extends Observable {
 			this.frame(deltaTiempo);
 			this.setChanged();
 			this.notifyObservers();
-			Thread.sleep(160);
+			Thread.sleep((long)fps);
 		}
 	}
 
@@ -102,7 +103,7 @@ public class Partida extends Observable {
 	private void frame(float deltaTiempo) throws Exception {
 		this.frames++;
 
-		if (this.frames % Constantes.FRAMES_POR_ELEMENTO == 0
+		if (this.frames % (Constantes.FRAMES_POR_ELEMENTO / this.dificultad.obtenerValor() ) == 0
 				&& this.elementos.size() <= Constantes.CANTIDAD_MAXIMA_ELEMENTOS) {
 			this.frames = 0;
 			this.crearElemento(this.obtenerEnteroAlAzar(1, 7));
@@ -124,7 +125,7 @@ public class Partida extends Observable {
 	}
 
 	private void crearAnimal(int tipoAnimal) {
-		Posicion p = new Posicion(this.anchoPantalla / 2, this.altoPantalla - 20);
+		Posicion p = new Posicion(this.anchoPantalla / 2, this.altoPantalla - Constantes.TAMANO_LADO_ANIMAL);
 		Movimiento m = this.fabricasMovimientos.get(Constantes.CLAVE_MOVIMIENTO_LINEAL).Crear(anchoPantalla, altoPantalla);
 		this.animal = this.fabricasAnimales.get(tipoAnimal).Crear(m, p, this.contexto, Constantes.VIDA_INICIAL_ANIMAL);
 	}
@@ -137,21 +138,25 @@ public class Partida extends Observable {
 		Movimiento movimiento = this.obtenerMovimiento();
 		Posicion posicion = new Posicion(obtenerRealAlAzar(0, this.anchoPantalla), 0);
 
-		float velocidad = Constantes.VELOCIDAD_ELEMENTO_DEFAULT;
+		float vx = Constantes.VELOCIDAD_X_ELEMENTO_DEFAULT;
+		float vy = Constantes.VELOCIDAD_Y_ELEMENTO_DEFAULT;
 		switch (dificultad) {
 		case dificil:
-			velocidad = velocidad * Constantes.MULTIPLICADOR_VELOCIDAD_ELEMENTO_DIFICIL;
+			vx = vx * Constantes.MULTIPLICADOR_VELOCIDAD_ELEMENTO_DIFICIL;
+			vy = vy * Constantes.MULTIPLICADOR_VELOCIDAD_ELEMENTO_DIFICIL;
 			break;
 		case medio:
-			velocidad = velocidad * Constantes.MULTIPLICADOR_VELOCIDAD_ELEMENTO_MEDIO;
+			vx = vx * Constantes.MULTIPLICADOR_VELOCIDAD_ELEMENTO_MEDIO;
+			vy = vy * Constantes.MULTIPLICADOR_VELOCIDAD_ELEMENTO_MEDIO;
 			break;
 		case facil:
-			velocidad = velocidad * Constantes.MULTIPLICADOR_VELOCIDAD_ELEMENTO_FACIL;
+			vx = vx * Constantes.MULTIPLICADOR_VELOCIDAD_ELEMENTO_FACIL;
+			vy = vy * Constantes.MULTIPLICADOR_VELOCIDAD_ELEMENTO_FACIL;
 			break;
 		}
 
 		float puntaje = this.puntajesElementos.getOrDefault(tipoElemento,Constantes.PUNTAJE_ELEMENTO_DEFAULT);
-		this.elementos.add(this.fabricasElementos.get(tipoElemento).Crear(movimiento, posicion, velocidad, velocidad, puntaje));
+		this.elementos.add(this.fabricasElementos.get(tipoElemento).Crear(movimiento, posicion, vx, vy, puntaje));
 	}
 
 	private Movimiento obtenerMovimiento() throws Exception {

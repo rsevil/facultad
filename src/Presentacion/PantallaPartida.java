@@ -77,7 +77,7 @@ public class PantallaPartida extends JPanel {
 		
 		Animal animal = partida.obtenerAnimal();
 		Puntaje puntaje = partida.obtenerPuntaje();
-		graficables.add(new TextoGraficable((Graphics2D)g, 10, 10, String.format("%s - Vida: %.0f, Puntaje: %.2f", puntaje.obtenerNombre(), animal.obtenerVida(), puntaje.obtenerPuntos())));
+		graficables.add(new TextoGraficable((Graphics2D)g, 10, 10, String.format("%s - Vida: %.2f, Puntaje: %.2f", puntaje.obtenerNombre(), animal.obtenerVida(), puntaje.obtenerPuntos())));
 		
 		for(Elemento e : partida.obtenerElementos())
 			graficables.add(crearGraficable(g, e));

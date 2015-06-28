@@ -16,7 +16,7 @@ public class Zigzag extends Movimiento {
 	@Override
 	public Posicion calcularPosicion(float vx, float vy, float deltaTiempo, float xi, float xf, float yi, float yf) {
 		this.frames++;
-		if (this.frames == 180 && xf < this.anchoPantalla){
+		if (this.frames == 180 && (xf < this.anchoPantalla || xi <= 0)){
 			if(this.derecha){
 				this.derecha = false;
 				this.izquierda = true;
@@ -29,7 +29,7 @@ public class Zigzag extends Movimiento {
 			if (this.derecha && xf >= anchoPantalla){
 				this.derecha = false;
 				this.izquierda = true;
-			}else if (this.izquierda && xf <= anchoPantalla){
+			}else if (this.izquierda && xi <= 0){
 				this.derecha = false;
 				this.izquierda = true;
 			}
