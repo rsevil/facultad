@@ -153,7 +153,7 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 			partida.elegirContexto(lstContextos.getItemAt(lstContextos.getSelectedIndex()).obtenerValor());
 			partida.elegirAnimal(lstAnimales.getItemAt(lstAnimales.getSelectedIndex()).obtenerValor());
 			partida.elegirDificultad(Dificultad.obtenerDificultad(lstDificultades.getItemAt(lstDificultades.getSelectedIndex()).obtenerValor()));
-			// p.configurarElemento(tipoElemento,puntos)
+			//partida.configurarElemento(tipoElemento,puntos)
 			// ...
 			
 			JFrame frame = new JFrame("Partida");
