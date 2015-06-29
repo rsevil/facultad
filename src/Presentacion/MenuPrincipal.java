@@ -162,18 +162,20 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 			frame.setSize(this.altoPantallaJuego, this.anchoPantallaJuego);
 			frame.setVisible(true);
 			frame.setResizable(false);
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.pack();
 			frame.addWindowListener(new WindowAdapter() {
 				public void windowClosing(WindowEvent e) {
-					partida.deleteObservers();
+					try{
+						pantallaPartida.cerrarPartida();
+					}catch(Exception ex){
+						JOptionPane.showMessageDialog(frame, ex.toString());
+					}
 				}
 			});
 			
 			pantallaPartida.iniciarPartida();
-			
 		}catch(Exception ex){
-			JOptionPane.showMessageDialog(this, ex.getMessage());
+			JOptionPane.showMessageDialog(this, ex.toString());
 		}
 	}
 	

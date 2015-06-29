@@ -1,6 +1,10 @@
 package Modelo;
 
 public abstract class Danino extends Elemento {
+	public Danino(Movimiento movimiento, Posicion posicion, float vx, float vy, float puntaje, int ancho, int alto){
+		super(movimiento, posicion, vx, vy, puntaje, ancho, alto);
+	}
+	
 	public Danino(Movimiento movimiento, Posicion posicion, float vx, float vy, float puntaje){
 		super(movimiento, posicion, vx, vy, puntaje);
 	}

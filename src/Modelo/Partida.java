@@ -1,9 +1,6 @@
 package Modelo;
 
 import java.util.*;
-
-import javax.swing.JFrame;
-
 import Modelo.Fabricas.*;
 
 public class Partida extends Observable {
@@ -26,6 +23,8 @@ public class Partida extends Observable {
 	private Map<Integer, FabricaElemento> fabricasElementos;
 	private Map<Integer, FabricaContexto> fabricasContextos;
 	private Map<Integer, FabricaMovimiento> fabricasMovimientos;
+	
+	private boolean forzarFinalizacion;
 
 	public Partida(int anchoPantalla, int altoPantalla,
 			Map<Integer, FabricaAnimal> fabricasAnimales,
@@ -76,12 +75,22 @@ public class Partida extends Observable {
 			this.notifyObservers();
 			Thread.sleep((long)fps);
 		}
-		if(terminada())
-			System.exit(0);
+		//Aca no hay que hacer un System.exit(0) porque cierra toda la aplicacion
+		//lo que hay que hacer es afuera, cuando se grafica, ver si la partida
+		//esta terminada y mostrarle algo como partida terminada, puntaje tanto
+//		if(terminada())
+//			System.exit(0);
+	}
+	
+	public void finalizar(){
+		this.forzarFinalizacion = true;
 	}
 
 	public Puntaje obtenerPuntaje() {
-		return new Puntaje(this.nombre, this.puntajeAcumulado);
+		return new Puntaje(
+				this.nombre, 
+				this.animal.getClass().getName().replaceAll("Modelo.", ""), 
+				this.puntajeAcumulado);
 	}
 
 	public void asignarDerecha(boolean derecha) {
@@ -124,8 +133,8 @@ public class Partida extends Observable {
 		this.eliminarElementos();
 	}
 
-	private boolean terminada() {
-		return this.animal.estoyMuerto();
+	public boolean terminada() {
+		return this.forzarFinalizacion || this.animal.estoyMuerto();
 	}
 
 	private void crearAnimal(int tipoAnimal) {
