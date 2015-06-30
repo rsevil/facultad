@@ -7,16 +7,16 @@ public class Fruta extends Benefico {
 
 	@Override
 	float calcularBeneficio(Mamifero m) {
-		return super.puntaje * Constantes.MULTIPLICADOR_PUNTAJE_ELEMENTO_ALTO;
+		return super.puntaje * Constantes.MULTIPLICADOR_PUNTAJE_ELEMENTO_NORMAL;
 	}
 	
 	@Override
 	float calcularBeneficio(Ave a) {
-		return super.puntaje * Constantes.MULTIPLICADOR_PUNTAJE_ELEMENTO_BAJO;
+		return super.puntaje * Constantes.MULTIPLICADOR_PUNTAJE_ELEMENTO_ALTO;
 	}
 	
 	@Override
 	float calcularBeneficio(Reptil r) {
-		return super.puntaje * Constantes.MULTIPLICADOR_PUNTAJE_ELEMENTO_NORMAL;
+		return super.puntaje * Constantes.MULTIPLICADOR_PUNTAJE_ELEMENTO_BAJO;
 	}
 }
