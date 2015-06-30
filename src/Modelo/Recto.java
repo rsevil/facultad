@@ -7,7 +7,7 @@ public class Recto extends Movimiento {
 	}
 
 	@Override
-	public Posicion calcularPosicion(float vx, float vy, float deltaTiempo, float xi, float xf, float yi, float yf) {
+	Posicion calcularPosicion(float vx, float vy, float deltaTiempo, float xi, float xf, float yi, float yf) {
 		return new Posicion(
 				xi,
 				yi + vy * deltaTiempo);

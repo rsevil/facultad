@@ -7,7 +7,7 @@ public class Lineal extends Movimiento {
 	}
 
 	@Override
-	public Posicion calcularPosicion(float vx, float vy, float deltaTiempo, float xi, float xf, float yi, float yf) {
+	Posicion calcularPosicion(float vx, float vy, float deltaTiempo, float xi, float xf, float yi, float yf) {
 		return new Posicion(
 				limites(xi + vx * deltaTiempo, 0, this.anchoPantalla - (xf - xi)), 
 				yi);

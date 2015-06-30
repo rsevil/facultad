@@ -7,6 +7,6 @@ import Modelo.Posicion;
 
 public abstract class FabricaAnimal {
 	
-	public abstract Animal Crear(Movimiento movimiento, Posicion posicion, Contexto contexto, float vidaInicial);
+	public abstract Animal crear(Movimiento movimiento, Posicion posicion, Contexto contexto, float vidaInicial);
 	
 }

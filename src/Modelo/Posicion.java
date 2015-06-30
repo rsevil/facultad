@@ -3,7 +3,7 @@ package Modelo;
 public class Posicion {
 	private float x;
 	private float y;
-	public Posicion(float x, float y) {
+	Posicion(float x, float y) {
 		this.x = x;
 		this.y = y;
 	}

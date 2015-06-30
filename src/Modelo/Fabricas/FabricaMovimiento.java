@@ -4,6 +4,6 @@ import Modelo.Movimiento;
 
 public abstract class FabricaMovimiento {
 	
-	public abstract Movimiento Crear(int anchoPantalla, int altoPantalla);
+	public abstract Movimiento crear(int anchoPantalla, int altoPantalla);
 
 }

@@ -7,7 +7,7 @@ import Modelo.Posicion;
 
 public class FabricaElementoLata extends FabricaElemento {
 
-	public Elemento Crear(Movimiento movimiento, Posicion posicion, float vx, float vy, float puntaje) {
+	public Elemento crear(Movimiento movimiento, Posicion posicion, float vx, float vy, float puntaje) {
 		return new Lata(movimiento,posicion,vx,vy,puntaje);
 	}
 

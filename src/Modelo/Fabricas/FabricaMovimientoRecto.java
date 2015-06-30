@@ -5,7 +5,7 @@ import Modelo.Recto;
 
 public class FabricaMovimientoRecto extends FabricaMovimiento {
 
-	public Movimiento Crear(int anchoPantalla, int altoPantalla) {
+	public Movimiento crear(int anchoPantalla, int altoPantalla) {
 		return new Recto(anchoPantalla,altoPantalla);
 	}
 

@@ -8,7 +8,7 @@ import Modelo.Posicion;
 
 public class FabricaAnimalMamifero extends FabricaAnimal {
 
-	public Animal Crear(Movimiento movimiento, Posicion posicion, Contexto contexto, float vidaInicial) {
+	public Animal crear(Movimiento movimiento, Posicion posicion, Contexto contexto, float vidaInicial) {
 		return new Mamifero(movimiento,posicion,contexto,vidaInicial);
 	}
 

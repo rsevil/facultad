@@ -7,7 +7,7 @@ import Modelo.Posicion;
 
 public class FabricaElementoAsteroide extends FabricaElemento {
 	
-	public Elemento Crear(Movimiento movimiento, Posicion posicion, float vx, float vy, float puntaje) {
+	public Elemento crear(Movimiento movimiento, Posicion posicion, float vx, float vy, float puntaje) {
 		return new Asteroide(movimiento,posicion,vx,vy,puntaje);
 	}
 

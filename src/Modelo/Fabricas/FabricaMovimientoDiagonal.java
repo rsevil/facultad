@@ -5,7 +5,7 @@ import Modelo.Movimiento;
 
 public class FabricaMovimientoDiagonal extends FabricaMovimiento {
 
-	public Movimiento Crear(int anchoPantalla, int altoPantalla) {
+	public Movimiento crear(int anchoPantalla, int altoPantalla) {
 		return new Diagonal(anchoPantalla,altoPantalla);
 	}
 

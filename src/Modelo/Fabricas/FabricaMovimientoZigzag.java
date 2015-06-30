@@ -5,7 +5,7 @@ import Modelo.Zigzag;
 
 public class FabricaMovimientoZigzag extends FabricaMovimiento {
 
-	public Movimiento Crear(int anchoPantalla, int altoPantalla) {
+	public Movimiento crear(int anchoPantalla, int altoPantalla) {
 		return new Zigzag(anchoPantalla,altoPantalla);
 	}
 

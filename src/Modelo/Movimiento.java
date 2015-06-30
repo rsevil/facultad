@@ -7,7 +7,7 @@ public abstract class Movimiento {
 	protected float vx;
 	protected float vy;
 	
-	public Movimiento(int anchoPantalla, int altoPantalla){
+	Movimiento(int anchoPantalla, int altoPantalla){
 		this.anchoPantalla = anchoPantalla;
 		this.altoPantalla = altoPantalla;
 	}

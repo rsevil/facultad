@@ -4,7 +4,7 @@ public class Puntaje {
 	private String nombre;
 	private String animal;
 	private float puntos;
-	public Puntaje(String nombre, String animal, float puntos) {
+	Puntaje(String nombre, String animal, float puntos) {
 		this.nombre = nombre;
 		this.animal = animal;
 		this.puntos = puntos;

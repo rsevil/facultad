@@ -6,6 +6,6 @@ import Modelo.Posicion;
 
 public abstract class FabricaElemento {
 
-	public abstract Elemento Crear(Movimiento movimiento, Posicion posicion, float vx, float vy, float puntaje);
+	public abstract Elemento crear(Movimiento movimiento, Posicion posicion, float vx, float vy, float puntaje);
 	
 }

@@ -9,7 +9,7 @@ public abstract class EntidadMovil {
 	
 	protected Posicion posicionAnterior;
 	
-	public EntidadMovil(Movimiento movimiento, Posicion posicion, int ancho, int alto) {
+	EntidadMovil(Movimiento movimiento, Posicion posicion, int ancho, int alto) {
 		this.movimiento = movimiento;
 		this.posicion = posicion;
 		this.ancho = ancho;
@@ -18,7 +18,7 @@ public abstract class EntidadMovil {
 		this.posicionAnterior = posicion;
 	}
 	
-	public EntidadMovil(Movimiento movimiento, Posicion posicion, int ancho){
+	EntidadMovil(Movimiento movimiento, Posicion posicion, int ancho){
 		this(movimiento, posicion, ancho, ancho);
 	}
 	
@@ -26,7 +26,7 @@ public abstract class EntidadMovil {
 	
 	protected abstract float obtenerVY();
 	
-	protected void mover(float deltaTiempo){
+	void mover(float deltaTiempo){
 		this.posicionAnterior = this.posicion;
 		this.posicion = 
 				this.movimiento.calcularPosicion(

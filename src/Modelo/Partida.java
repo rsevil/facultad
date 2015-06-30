@@ -11,8 +11,6 @@ public class Partida extends Observable {
 	private int anchoPantalla;
 	private int altoPantalla;
 	private Random random;
-	private boolean derecha;
-	private boolean izquierda;
 
 	private Animal animal;
 	private Contexto contexto;
@@ -26,7 +24,7 @@ public class Partida extends Observable {
 	
 	private boolean forzarFinalizacion;
 
-	public Partida(int anchoPantalla, int altoPantalla,
+	Partida(int anchoPantalla, int altoPantalla,
 			Map<Integer, FabricaAnimal> fabricasAnimales,
 			Map<Integer, FabricaElemento> fabricasElementos,
 			Map<Integer, FabricaContexto> fabricasContextos,
@@ -94,11 +92,11 @@ public class Partida extends Observable {
 	}
 
 	public void asignarDerecha(boolean derecha) {
-		this.derecha = derecha;
+		this.animal.asignarDerecha(derecha);
 	}
 
 	public void asignarIzquierda(boolean izquierda) {
-		this.izquierda = izquierda;
+		this.animal.asignarIzquierda(izquierda);
 	}
 
 	public Animal obtenerAnimal() {
@@ -112,6 +110,10 @@ public class Partida extends Observable {
 	public Collection<Elemento> obtenerElementos() {
 		return this.elementos;
 	}
+	
+	public boolean terminada() {
+		return this.forzarFinalizacion || this.animal.estoyMuerto();
+	}
 
 	private void frame(float deltaTiempo) throws Exception {
 		this.frames++;
@@ -122,10 +124,10 @@ public class Partida extends Observable {
 			this.crearElemento(this.obtenerEnteroAlAzar(1, 7));
 		}
 
-		this.animal.moverAnimal(deltaTiempo, this.derecha, this.izquierda);
+		this.animal.mover(deltaTiempo);
 
 		this.moverElementos(deltaTiempo);
-
+		
 		this.calcularVida();
 
 		this.calcularPuntaje();
@@ -133,14 +135,10 @@ public class Partida extends Observable {
 		this.eliminarElementos();
 	}
 
-	public boolean terminada() {
-		return this.forzarFinalizacion || this.animal.estoyMuerto();
-	}
-
 	private void crearAnimal(int tipoAnimal) {
 		Posicion p = new Posicion(this.anchoPantalla / 2, this.altoPantalla - Constantes.TAMANO_LADO_ANIMAL);
-		Movimiento m = this.fabricasMovimientos.get(Constantes.CLAVE_MOVIMIENTO_LINEAL).Crear(anchoPantalla, altoPantalla);
-		this.animal = this.fabricasAnimales.get(tipoAnimal).Crear(m, p, this.contexto, Constantes.VIDA_INICIAL_ANIMAL);
+		Movimiento m = this.fabricasMovimientos.get(Constantes.CLAVE_MOVIMIENTO_LINEAL).crear(anchoPantalla, altoPantalla);
+		this.animal = this.fabricasAnimales.get(tipoAnimal).crear(m, p, this.contexto, Constantes.VIDA_INICIAL_ANIMAL);
 	}
 
 	private void crearContexto(int tipoContexto) {
@@ -169,11 +167,11 @@ public class Partida extends Observable {
 		}
 
 		float puntaje = this.puntajesElementos.getOrDefault(tipoElemento,Constantes.PUNTAJE_ELEMENTO_DEFAULT);
-		this.elementos.add(this.fabricasElementos.get(tipoElemento).Crear(movimiento, posicion, vx, vy, puntaje));
+		this.elementos.add(this.fabricasElementos.get(tipoElemento).crear(movimiento, posicion, vx, vy, puntaje));
 	}
 
 	private Movimiento obtenerMovimiento() throws Exception {
-		return this.fabricasMovimientos.get(obtenerEnteroAlAzar(1, 3)).Crear(this.anchoPantalla, this.altoPantalla);
+		return this.fabricasMovimientos.get(obtenerEnteroAlAzar(1, 3)).crear(this.anchoPantalla, this.altoPantalla);
 	}
 
 	private int obtenerEnteroAlAzar(int min, int max) {
@@ -188,7 +186,7 @@ public class Partida extends Observable {
 
 	private void moverElementos(float deltaTiempo) {
 		for (Elemento e : this.elementos)
-			e.moverElemento(deltaTiempo);
+			e.mover(deltaTiempo);
 	}
 
 	private void calcularVida() {

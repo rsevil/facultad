@@ -12,7 +12,7 @@ public class Diagonal extends Movimiento {
 	}
 
 	@Override
-	public Posicion calcularPosicion(float vx, float vy, float deltaTiempo, float xi, float xf, float yi, float yf) {
+	Posicion calcularPosicion(float vx, float vy, float deltaTiempo, float xi, float xf, float yi, float yf) {
 		if (this.derecha && xf >= anchoPantalla){
 			this.derecha = false;
 			this.izquierda = true;
