@@ -7,7 +7,7 @@ public class Zigzag extends Movimiento {
 	private boolean izquierda;
 	
 	public Zigzag(int anchoPantalla, int altoPantalla){
-		super(anchoPantalla, altoPantalla);	
+		super(anchoPantalla, altoPantalla);
 		this.frames = 0;
 		this.derecha = true;
 		this.izquierda = false;
@@ -29,9 +29,11 @@ public class Zigzag extends Movimiento {
 			if (this.derecha && xf >= anchoPantalla){
 				this.derecha = false;
 				this.izquierda = true;
+				this.frames = 0;
 			}else if (this.izquierda && xi <= 0){
 				this.derecha = false;
 				this.izquierda = true;
+				this.frames = 0;
 			}
 		}
 		
