@@ -2,6 +2,11 @@ package Presentacion;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
+
 import javax.swing.*;
 
 import Modelo.*;
@@ -182,7 +187,47 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 	private void obtenerPuntajes(){
 		// TODO: En un popupsito mostrar una tabla con los 10 
 		// primeros puntajes ordenados de mayor a menor
-		juego.obtenerPuntajes();
+		
+		//obtener la lista de puntajes del juego
+		List<Puntaje> puntajes = new ArrayList<Puntaje>(juego.obtenerPuntajes());
+
+		//Ordenar la lista, hay que usar un Comparator<Puntaje>
+		//http://stackoverflow.com/questions/2477261/how-to-sort-a-collectiont
+		Collections.sort(
+			puntajes, 
+			new Comparator<Puntaje>(){
+				public int compare(Puntaje p, Puntaje p1){
+					//para que de de mayor a menor
+					return (int)-(p.obtenerPuntos() - p1.obtenerPuntos());
+				}
+			});
+			
+		//Aca hay que probar que pasa si la lista
+		//tiene menos de 10 elementos
+		//http://www.leveluplunch.com/java/examples/limit-or-take-first-elements-from-list/
+		int max = 10;
+		if (puntajes.size() < max)
+			max = puntajes.size();
+		puntajes = puntajes.subList(0, max);
+		
+		Object columnas[] = {"Nombre","Animal","Puntos"};
+		Object filas[][] = new Object[max][3];
+		int i = 0;
+		for(Puntaje p : puntajes){
+			filas[i][0] = p.obtenerNombre();
+			filas[i][1] = p.obtenerAnimal();
+			filas[i][2] = String.format("%.2f", p.obtenerPuntos());
+			i++;
+		}
+		
+		JFrame frame = new JFrame("Puntajes");
+		JTable table = new JTable(filas,columnas);
+		JScrollPane scrollPane = new JScrollPane(table);
+		
+		frame.add(scrollPane, BorderLayout.CENTER);
+		frame.setLocationRelativeTo(null);
+		frame.setSize(300,150);
+		frame.setVisible(true);
 	}
 	
 	private void validarIniciar() throws Exception {
