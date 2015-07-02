@@ -23,6 +23,22 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 	private JLabel lblAnimal;
 	private JLabel lblContexto;
 	
+	private JLabel lblLadrillo;
+	private JLabel lblLata;
+	private JLabel lblAsteroide;
+	private JLabel lblEstrella;
+	private JLabel lblFruta;
+	private JLabel lblCarne;
+	private JLabel lblVerdura;
+	
+	private JTextField txtLadrillo;
+	private JTextField txtLata;
+	private JTextField txtAsteroide;
+	private JTextField txtEstrella;
+	private JTextField txtFruta;
+	private JTextField txtCarne;
+	private JTextField txtVerdura;
+	
 	private JButton btnIniciar;
 	private JButton btnPuntaje;
 	private JButton btnSalir;
@@ -37,10 +53,18 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 	private final int anchoPantallaJuego = 400;
 	private final int altoPantallaJuego = 600;
 	
+	private int puntajeAsteroide;
+	private int puntajeLata;
+	private int puntajeLadrillo;
+	private int puntajeEstrella;
+	private int puntajeCarne;
+	private int puntajeVerdura;
+	private int puntajeFruta;
+	
 	public MenuPrincipal(){
 		iniciarComponentes();
 		setTitle("Grupo 1");
-		setSize(300, 500);
+		setSize(600, 450);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		
@@ -59,6 +83,28 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 		this.iniciarBotones();
 		
 		this.contenedor.add(lblTitulo);
+		
+		this.contenedor.add(lblAsteroide);
+		this.contenedor.add(txtAsteroide);
+		
+		this.contenedor.add(lblLata);
+		this.contenedor.add(txtLata);
+		
+		this.contenedor.add(lblEstrella);
+		this.contenedor.add(txtEstrella);
+		
+		this.contenedor.add(lblLadrillo);
+		this.contenedor.add(txtLadrillo);
+		
+		this.contenedor.add(lblCarne);
+		this.contenedor.add(txtCarne);
+		
+		this.contenedor.add(lblVerdura);
+		this.contenedor.add(txtVerdura);
+		
+		this.contenedor.add(lblFruta);
+		this.contenedor.add(txtFruta);
+		
 		this.contenedor.add(txtNombre);
 		this.contenedor.add(lblNombre);
 		this.contenedor.add(lblDificultad);
@@ -75,16 +121,12 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 	private void iniciarLabels(){
 		this.lblTitulo = new JLabel();
 		this.lblTitulo.setText("Animales Sueltos");
-		this.lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 20));
-		this.lblTitulo.setBounds(65, 15, 250, 40);
+		this.lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 36));
+		this.lblTitulo.setBounds(145, 35, 400, 40);
 		
 		this.lblNombre = new JLabel();
 		this.lblNombre.setText("Nombre: ");
 		this.lblNombre.setBounds(50, 130, 280, 23);
-		
-		this.lblDificultad = new JLabel();
-		this.lblDificultad.setText("Dificultad");
-		this.lblDificultad.setBounds(50, 305, 100, 23);
 		
 		this.lblAnimal = new JLabel();
 		this.lblAnimal.setText("Animal");
@@ -93,27 +135,87 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 		this.lblContexto = new JLabel();
 		this.lblContexto.setText("Contexto");
 		this.lblContexto.setBounds(50, 245, 100, 23);
+		
+		this.lblDificultad = new JLabel();
+		this.lblDificultad.setText("Dificultad");
+		this.lblDificultad.setBounds(50, 305, 100, 23);
+		
+		this.lblAsteroide = new JLabel();
+		this.lblAsteroide.setText("Asteroide");
+		this.lblAsteroide.setBounds(270, 130, 280, 23);
+		
+		this.lblLata = new JLabel();
+		this.lblLata.setText("Lata");
+		this.lblLata.setBounds(270, 185, 280, 23);
+		
+		this.lblEstrella = new JLabel();
+		this.lblEstrella.setText("Estrella");
+		this.lblEstrella.setBounds(270, 245, 280, 23);
+		
+		this.lblLadrillo = new JLabel();
+		this.lblLadrillo.setText("Ladrillo");
+		this.lblLadrillo.setBounds(270, 305, 280, 23);
+		
+		this.lblCarne = new JLabel();
+		this.lblCarne.setText("Carne");
+		this.lblCarne.setBounds(450, 130, 280, 23);
+		
+		this.lblVerdura = new JLabel();
+		this.lblVerdura.setText("Verdura");
+		this.lblVerdura.setBounds(450, 185, 280, 23);
+		
+		this.lblFruta = new JLabel();
+		this.lblFruta.setText("Fruta");
+		this.lblFruta.setBounds(450, 245, 280, 23);
 	}
 	
 	private void iniciarCajasDeTexto(){
 		this.txtNombre = new JTextField();
 		this.txtNombre.setBounds(130, 130, 90, 23);
+		
+		this.txtAsteroide = new JTextField();
+		this.txtAsteroide.setText("1");
+		this.txtAsteroide.setBounds(350, 130, 50, 23);
+		
+		this.txtLata = new JTextField();
+		this.txtLata.setText("1");
+		this.txtLata.setBounds(350, 185, 50, 23);
+		
+		this.txtEstrella = new JTextField();
+		this.txtEstrella.setText("1");
+		this.txtEstrella.setBounds(350, 245, 50, 23);
+		
+		this.txtLadrillo = new JTextField();
+		this.txtLadrillo.setText("1");
+		this.txtLadrillo.setBounds(350, 305, 50, 23);
+		
+		this.txtCarne = new JTextField();
+		this.txtCarne.setText("1");
+		this.txtCarne.setBounds(520, 130, 50, 23);
+		
+		this.txtVerdura = new JTextField();
+		this.txtVerdura.setText("1");
+		this.txtVerdura.setBounds(520, 185, 50, 23);
+		
+		this.txtFruta = new JTextField();
+		this.txtFruta.setText("1");
+		this.txtFruta.setBounds(520, 245, 50, 23);
 	}
 	
 	private void iniciarBotones(){
 		this.btnIniciar = new JButton();
 		this.btnIniciar.setText("Iniciar Partida");
-		this.btnIniciar.setBounds(80, 80, 130, 23);
+		this.btnIniciar.setBounds(80, 375, 130, 23);
 		this.btnIniciar.addActionListener(this);
 
 		this.btnPuntaje = new JButton();
 		this.btnPuntaje.setText("Puntajes");
-		this.btnPuntaje.setBounds(80, 375, 130, 23);
+		this.btnPuntaje.setBounds(230, 375, 130, 23);
 		this.btnPuntaje.addActionListener(this);
 		
 		this.btnSalir = new JButton();
 		this.btnSalir.setText("Salir");
-		this.btnSalir.setBounds(95, 420, 100, 23);
+		this.btnSalir.setBounds(380, 375, 130, 23);
 		this.btnSalir.addActionListener(this);
 	}
 	
@@ -158,8 +260,14 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 			partida.elegirContexto(lstContextos.getItemAt(lstContextos.getSelectedIndex()).obtenerValor());
 			partida.elegirAnimal(lstAnimales.getItemAt(lstAnimales.getSelectedIndex()).obtenerValor());
 			partida.elegirDificultad(Dificultad.obtenerDificultad(lstDificultades.getItemAt(lstDificultades.getSelectedIndex()).obtenerValor()));
-			//partida.configurarElemento(tipoElemento,puntos)
-			// ...
+			
+			partida.configurarElemento(1,puntajeVerdura);
+			partida.configurarElemento(2,puntajeFruta);
+			partida.configurarElemento(3,puntajeCarne);
+			partida.configurarElemento(4,puntajeAsteroide);
+			partida.configurarElemento(5,puntajeEstrella);
+			partida.configurarElemento(6,puntajeLata);
+			partida.configurarElemento(7,puntajeLadrillo);
 			
 			JFrame frame = new JFrame("Partida");
 			PantallaPartida pantallaPartida = new PantallaPartida(partida, this.anchoPantallaJuego, this.altoPantallaJuego);
@@ -180,7 +288,11 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 			
 			pantallaPartida.iniciarPartida();
 		}catch(Exception ex){
-			JOptionPane.showMessageDialog(this, ex.toString());
+			if (ex.getMessage().isEmpty()){
+				JOptionPane.showMessageDialog(this, ex.toString());				
+			}else{
+				JOptionPane.showMessageDialog(this, ex.getMessage());
+			}
 		}
 	}
 	
@@ -231,7 +343,70 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 	}
 	
 	private void validarIniciar() throws Exception {
-		if (txtNombre.getText() == null)
+		if (txtNombre.getText().isEmpty())
 			throw new Exception("El campo \"Nombre\" no puede estar vacio");
+		
+		if (txtAsteroide.getText().isEmpty())
+			throw new Exception("El campo \"Asteroide\" no puede estar vacio");
+		
+		if (txtLata.getText().isEmpty())
+			throw new Exception("El campo \"Lata\" no puede estar vacio");
+		
+		if (txtLadrillo.getText().isEmpty())
+			throw new Exception("El campo \"Ladrillo\" no puede estar vacio");
+		
+		if (txtEstrella.getText().isEmpty())
+			throw new Exception("El campo \"Estrella\" no puede estar vacio");
+		
+		if (txtCarne.getText().isEmpty())
+			throw new Exception("El campo \"Carne\" no puede estar vacio");
+		
+		if (txtVerdura.getText().isEmpty())
+			throw new Exception("El campo \"Verdura\" no puede estar vacio");
+		
+		if (txtFruta.getText().isEmpty())
+			throw new Exception("El campo \"Fruta\" no puede estar vacio");
+		
+		try{
+			puntajeAsteroide = Integer.parseInt(txtAsteroide.getText());
+		}catch(NumberFormatException ex){
+			throw new Exception("El campo \"Asteroide\" tiene que ser un numero entero");
+		}
+		
+		try{
+			puntajeLata = Integer.parseInt(txtLata.getText());
+		}catch(NumberFormatException ex){
+			throw new Exception("El campo \"Lata\" tiene que ser un numero entero");
+		}
+		
+		try{
+			puntajeLadrillo = Integer.parseInt(txtLadrillo.getText());
+		}catch(NumberFormatException ex){
+			throw new Exception("El campo \"Ladrillo\" tiene que ser un numero entero");
+		}
+		
+		try{
+			puntajeEstrella = Integer.parseInt(txtEstrella.getText());
+		}catch(NumberFormatException ex){
+			throw new Exception("El campo \"Estrella\" tiene que ser un numero entero");
+		}
+		
+		try{
+			puntajeCarne = Integer.parseInt(txtCarne.getText());
+		}catch(NumberFormatException ex){
+			throw new Exception("El campo \"Carne\" tiene que ser un numero entero");
+		}
+		
+		try{
+			puntajeVerdura = Integer.parseInt(txtVerdura.getText());
+		}catch(NumberFormatException ex){
+			throw new Exception("El campo \"Verdura\" tiene que ser un numero entero");
+		}
+		
+		try{
+			puntajeFruta = Integer.parseInt(txtFruta.getText());
+		}catch(NumberFormatException ex){
+			throw new Exception("El campo \"Fruta\" tiene que ser un numero entero");
+		}
 	}
 }
