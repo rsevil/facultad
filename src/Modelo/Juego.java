@@ -10,10 +10,10 @@ public class Juego {
 	private int anchoPantalla;
 	private int altoPantalla;
 	
-	private Map<Integer,FabricaAnimal> fabricasAnimales;
-	private Map<Integer,FabricaElemento> fabricasElementos;
-	private Map<Integer,FabricaContexto> fabricasContextos;
-	private Map<Integer,FabricaMovimiento> fabricasMovimientos;
+	private Map<TipoAnimal,FabricaAnimal> fabricasAnimales;
+	private Map<TipoElemento,FabricaElemento> fabricasElementos;
+	private Map<TipoContexto,FabricaContexto> fabricasContextos;
+	private Map<TipoMovimiento,FabricaMovimiento> fabricasMovimientos;
 	
 	public Juego(int anchoPantalla, int altoPantalla){
 		this.anchoPantalla = anchoPantalla;
@@ -21,33 +21,33 @@ public class Juego {
 		this.partidas = new ArrayList<Partida>();
 		
 		//configuro las fabricas de animales
-		this.fabricasAnimales = new HashMap<Integer, FabricaAnimal>();
-		this.fabricasAnimales.put(1, new FabricaAnimalAve());
-		this.fabricasAnimales.put(2, new FabricaAnimalReptil());
-		this.fabricasAnimales.put(3, new FabricaAnimalMamifero());
+		this.fabricasAnimales = new HashMap<TipoAnimal, FabricaAnimal>();
+		this.fabricasAnimales.put(TipoAnimal.ave, new FabricaAnimalAve());
+		this.fabricasAnimales.put(TipoAnimal.reptil, new FabricaAnimalReptil());
+		this.fabricasAnimales.put(TipoAnimal.mamifero, new FabricaAnimalMamifero());
 		
 		//configuro las fabricas de elementos
-		this.fabricasElementos = new HashMap<Integer, FabricaElemento>();
-		this.fabricasElementos.put(1, new FabricaElementoVerdura());
-		this.fabricasElementos.put(2, new FabricaElementoFruta());
-		this.fabricasElementos.put(3, new FabricaElementoCarne());
-		this.fabricasElementos.put(4, new FabricaElementoAsteroide());
-		this.fabricasElementos.put(5, new FabricaElementoEstrella());
-		this.fabricasElementos.put(6, new FabricaElementoLata());
-		this.fabricasElementos.put(7, new FabricaElementoLadrillo());
+		this.fabricasElementos = new HashMap<TipoElemento, FabricaElemento>();
+		this.fabricasElementos.put(TipoElemento.verdura, new FabricaElementoVerdura());
+		this.fabricasElementos.put(TipoElemento.fruta, new FabricaElementoFruta());
+		this.fabricasElementos.put(TipoElemento.carne, new FabricaElementoCarne());
+		this.fabricasElementos.put(TipoElemento.asteroide, new FabricaElementoAsteroide());
+		this.fabricasElementos.put(TipoElemento.estrella, new FabricaElementoEstrella());
+		this.fabricasElementos.put(TipoElemento.lata, new FabricaElementoLata());
+		this.fabricasElementos.put(TipoElemento.ladrillo, new FabricaElementoLadrillo());
 		
 		//configuro las fabricas de contextos
-		this.fabricasContextos = new HashMap<Integer, FabricaContexto>();
-		this.fabricasContextos.put(1, new FabricaContextoAire());
-		this.fabricasContextos.put(2, new FabricaContextoTierra());
-		this.fabricasContextos.put(3, new FabricaContextoAgua());
+		this.fabricasContextos = new HashMap<TipoContexto, FabricaContexto>();
+		this.fabricasContextos.put(TipoContexto.aire, new FabricaContextoAire());
+		this.fabricasContextos.put(TipoContexto.tierra, new FabricaContextoTierra());
+		this.fabricasContextos.put(TipoContexto.agua, new FabricaContextoAgua());
 		
 		//configuro las fabricas de movimientos
-		this.fabricasMovimientos = new HashMap<Integer, FabricaMovimiento>();
-		this.fabricasMovimientos.put(1, new FabricaMovimientoRecto());
-		this.fabricasMovimientos.put(2, new FabricaMovimientoDiagonal());
-		this.fabricasMovimientos.put(3, new FabricaMovimientoZigzag());
-		this.fabricasMovimientos.put(4, new FabricaMovimientoLineal());
+		this.fabricasMovimientos = new HashMap<TipoMovimiento, FabricaMovimiento>();
+		this.fabricasMovimientos.put(TipoMovimiento.recto, new FabricaMovimientoRecto());
+		this.fabricasMovimientos.put(TipoMovimiento.diagonal, new FabricaMovimientoDiagonal());
+		this.fabricasMovimientos.put(TipoMovimiento.zigzag, new FabricaMovimientoZigzag());
+		this.fabricasMovimientos.put(TipoMovimiento.lineal, new FabricaMovimientoLineal());
 	}
 	
 	public Partida nuevaPartida() {

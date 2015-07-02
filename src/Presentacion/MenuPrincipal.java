@@ -228,16 +228,16 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 		this.lstDificultades.setSelectedIndex(0);
 		
 		this.lstAnimales = new JComboBox<ComboBoxItem>();
-		this.lstAnimales.addItem(new ComboBoxItem(1, "Ave"));
-		this.lstAnimales.addItem(new ComboBoxItem(2, "Reptil"));
-		this.lstAnimales.addItem(new ComboBoxItem(3, "Mamifero"));
+		this.lstAnimales.addItem(new ComboBoxItem(TipoAnimal.ave));
+		this.lstAnimales.addItem(new ComboBoxItem(TipoAnimal.reptil));
+		this.lstAnimales.addItem(new ComboBoxItem(TipoAnimal.mamifero));
 		this.lstAnimales.setBounds(130, 185, 100, 23);
 		this.lstAnimales.setSelectedIndex(0);
 		
 		this.lstContextos = new JComboBox<ComboBoxItem>();
-		this.lstContextos.addItem(new ComboBoxItem(1, "Aire"));
-		this.lstContextos.addItem(new ComboBoxItem(2, "Tierra"));
-		this.lstContextos.addItem(new ComboBoxItem(3, "Agua"));
+		this.lstContextos.addItem(new ComboBoxItem(TipoContexto.aire));
+		this.lstContextos.addItem(new ComboBoxItem(TipoContexto.tierra));
+		this.lstContextos.addItem(new ComboBoxItem(TipoContexto.agua));
 		this.lstContextos.setBounds(130, 245, 100, 23);
 		this.lstContextos.setSelectedIndex(0);
 	}
@@ -257,17 +257,30 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 			
 			Partida partida = juego.nuevaPartida();
 			partida.elegirNombre(txtNombre.getText());
-			partida.elegirContexto(lstContextos.getItemAt(lstContextos.getSelectedIndex()).obtenerValor());
-			partida.elegirAnimal(lstAnimales.getItemAt(lstAnimales.getSelectedIndex()).obtenerValor());
-			partida.elegirDificultad(Dificultad.obtenerDificultad(lstDificultades.getItemAt(lstDificultades.getSelectedIndex()).obtenerValor()));
+			partida.elegirContexto(
+					TipoContexto.obtenerTipoContexto(
+							lstContextos
+								.getItemAt(lstContextos.getSelectedIndex())
+								.obtenerValor()));
+			partida.elegirAnimal(
+					TipoAnimal.obtenerTipoAnimal(
+							lstAnimales
+								.getItemAt(lstAnimales.getSelectedIndex())
+								.obtenerValor()));
 			
-			partida.configurarElemento(1,puntajeVerdura);
-			partida.configurarElemento(2,puntajeFruta);
-			partida.configurarElemento(3,puntajeCarne);
-			partida.configurarElemento(4,puntajeAsteroide);
-			partida.configurarElemento(5,puntajeEstrella);
-			partida.configurarElemento(6,puntajeLata);
-			partida.configurarElemento(7,puntajeLadrillo);
+			partida.elegirDificultad(
+					Dificultad.obtenerDificultad(
+							lstDificultades
+								.getItemAt(lstDificultades.getSelectedIndex())
+								.obtenerValor()));
+			
+			partida.configurarElemento(TipoElemento.verdura,puntajeVerdura);
+			partida.configurarElemento(TipoElemento.fruta,puntajeFruta);
+			partida.configurarElemento(TipoElemento.carne,puntajeCarne);
+			partida.configurarElemento(TipoElemento.asteroide,puntajeAsteroide);
+			partida.configurarElemento(TipoElemento.estrella,puntajeEstrella);
+			partida.configurarElemento(TipoElemento.lata,puntajeLata);
+			partida.configurarElemento(TipoElemento.ladrillo,puntajeLadrillo);
 			
 			JFrame frame = new JFrame("Partida");
 			PantallaPartida pantallaPartida = new PantallaPartida(partida, this.anchoPantallaJuego, this.altoPantallaJuego);
@@ -376,7 +389,7 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 		try{
 			puntajeLata = Integer.parseInt(txtLata.getText());
 		}catch(NumberFormatException ex){
-			throw new Exception("El campo \"Lata\" tiene que ser un numero entero");
+			throw new Exception("El campo \"Lata\" tiene que ser un numero entero positivo");
 		}
 		
 		try{
@@ -408,5 +421,26 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 		}catch(NumberFormatException ex){
 			throw new Exception("El campo \"Fruta\" tiene que ser un numero entero");
 		}
+		
+		if (puntajeAsteroide < 0)
+			throw new Exception("El campo \"Asteroide\" tiene que ser un numero entero positivo");
+		
+		if (puntajeLata < 0)
+			throw new Exception("El campo \"Lata\" tiene que ser un numero entero positivo");
+		
+		if (puntajeLadrillo < 0)
+			throw new Exception("El campo \"Ladrillo\" tiene que ser un numero entero positivo");
+		
+		if (puntajeEstrella < 0)
+			throw new Exception("El campo \"Estrella\" tiene que ser un numero entero positivo");
+		
+		if (puntajeCarne < 0)
+			throw new Exception("El campo \"Carne\" tiene que ser un numero entero positivo");
+		
+		if (puntajeVerdura < 0)
+			throw new Exception("El campo \"Verdura\" tiene que ser un numero entero positivo");
+		
+		if (puntajeFruta < 0)
+			throw new Exception("El campo \"Fruta\" tiene que ser un numero entero positivo");
 	}
 }

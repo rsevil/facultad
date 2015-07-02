@@ -1,6 +1,7 @@
 package Modelo;
 
 import java.util.*;
+
 import Modelo.Fabricas.*;
 
 public class Partida extends Observable {
@@ -14,21 +15,21 @@ public class Partida extends Observable {
 
 	private Animal animal;
 	private Contexto contexto;
-	private Map<Integer, Float> puntajesElementos;
+	private Map<TipoElemento, Float> puntajesElementos;
 	private Collection<Elemento> elementos;
 
-	private Map<Integer, FabricaAnimal> fabricasAnimales;
-	private Map<Integer, FabricaElemento> fabricasElementos;
-	private Map<Integer, FabricaContexto> fabricasContextos;
-	private Map<Integer, FabricaMovimiento> fabricasMovimientos;
+	private Map<TipoAnimal, FabricaAnimal> fabricasAnimales;
+	private Map<TipoElemento, FabricaElemento> fabricasElementos;
+	private Map<TipoContexto, FabricaContexto> fabricasContextos;
+	private Map<TipoMovimiento, FabricaMovimiento> fabricasMovimientos;
 	
 	private boolean forzarFinalizacion;
 
 	Partida(int anchoPantalla, int altoPantalla,
-			Map<Integer, FabricaAnimal> fabricasAnimales,
-			Map<Integer, FabricaElemento> fabricasElementos,
-			Map<Integer, FabricaContexto> fabricasContextos,
-			Map<Integer, FabricaMovimiento> fabricasMovimientos) {
+			Map<TipoAnimal, FabricaAnimal> fabricasAnimales,
+			Map<TipoElemento, FabricaElemento> fabricasElementos,
+			Map<TipoContexto, FabricaContexto> fabricasContextos,
+			Map<TipoMovimiento, FabricaMovimiento> fabricasMovimientos) {
 		this.anchoPantalla = anchoPantalla;
 		this.altoPantalla = altoPantalla;
 		this.fabricasAnimales = fabricasAnimales;
@@ -37,7 +38,7 @@ public class Partida extends Observable {
 		this.fabricasMovimientos = fabricasMovimientos;
 
 		this.random = new Random();
-		this.puntajesElementos = new HashMap<Integer, Float>();
+		this.puntajesElementos = new HashMap<TipoElemento, Float>();
 		this.elementos = new ArrayList<Elemento>();
 	}
 
@@ -45,11 +46,11 @@ public class Partida extends Observable {
 		this.nombre = nombre;
 	}
 
-	public void elegirAnimal(int tipoAnimal) throws Exception {
+	public void elegirAnimal(TipoAnimal tipoAnimal) throws Exception {
 		this.crearAnimal(tipoAnimal);
 	}
 
-	public void elegirContexto(int tipoContexto) throws Exception {
+	public void elegirContexto(TipoContexto tipoContexto) throws Exception {
 		this.crearContexto(tipoContexto);
 	}
 
@@ -57,7 +58,7 @@ public class Partida extends Observable {
 		this.dificultad = dificultad;
 	}
 
-	public void configurarElemento(int tipoElemento, float puntaje) {
+	public void configurarElemento(TipoElemento tipoElemento, float puntaje) {
 		this.puntajesElementos.put(tipoElemento, puntaje);
 	}
 
@@ -121,7 +122,7 @@ public class Partida extends Observable {
 		if (this.frames % (Constantes.FRAMES_POR_ELEMENTO / this.dificultad.obtenerValor() ) == 0
 				&& this.elementos.size() <= Constantes.CANTIDAD_MAXIMA_ELEMENTOS) {
 			this.frames = 0;
-			this.crearElemento(this.obtenerEnteroAlAzar(1, 7));
+			this.crearElemento(TipoElemento.obtenerTipoElemento(this.obtenerEnteroAlAzar(1, 7)));
 		}
 
 		this.animal.mover(deltaTiempo);
@@ -135,17 +136,17 @@ public class Partida extends Observable {
 		this.eliminarElementos();
 	}
 
-	private void crearAnimal(int tipoAnimal) {
+	private void crearAnimal(TipoAnimal tipoAnimal) throws Exception {
 		Posicion p = new Posicion(this.anchoPantalla / 2, this.altoPantalla - Constantes.TAMANO_LADO_ANIMAL);
-		Movimiento m = this.fabricasMovimientos.get(Constantes.CLAVE_MOVIMIENTO_LINEAL).crear(anchoPantalla, altoPantalla);
+		Movimiento m = this.fabricasMovimientos.get(TipoMovimiento.obtenerTipoMovimiento(Constantes.CLAVE_MOVIMIENTO_LINEAL)).crear(anchoPantalla, altoPantalla);
 		this.animal = this.fabricasAnimales.get(tipoAnimal).crear(m, p, this.contexto, Constantes.VIDA_INICIAL_ANIMAL);
 	}
 
-	private void crearContexto(int tipoContexto) {
+	private void crearContexto(TipoContexto tipoContexto) {
 		this.contexto = this.fabricasContextos.get(tipoContexto).Crear();
 	}
 
-	private void crearElemento(int tipoElemento) throws Exception {
+	private void crearElemento(TipoElemento tipoElemento) throws Exception {
 		Movimiento movimiento = this.obtenerMovimiento();
 		Posicion posicion = new Posicion(obtenerRealAlAzar(0, this.anchoPantalla), 0);
 
@@ -171,7 +172,7 @@ public class Partida extends Observable {
 	}
 
 	private Movimiento obtenerMovimiento() throws Exception {
-		return this.fabricasMovimientos.get(obtenerEnteroAlAzar(1, 3)).crear(this.anchoPantalla, this.altoPantalla);
+		return this.fabricasMovimientos.get(TipoMovimiento.obtenerTipoMovimiento(obtenerEnteroAlAzar(1, 3))).crear(this.anchoPantalla, this.altoPantalla);
 	}
 
 	private int obtenerEnteroAlAzar(int min, int max) {

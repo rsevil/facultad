@@ -1,6 +1,8 @@
 package Presentacion;
 
 import Modelo.Dificultad;
+import Modelo.TipoAnimal;
+import Modelo.TipoContexto;
 
 public class ComboBoxItem {
 	
@@ -14,6 +16,14 @@ public class ComboBoxItem {
 	
 	public ComboBoxItem(Dificultad dificultad){
 		this(dificultad.obtenerValor(), dificultad.obtenerTexto());
+	}
+	
+	public ComboBoxItem(TipoAnimal tipoAnimal){
+		this(tipoAnimal.obtenerValor(), tipoAnimal.obtenerTexto());
+	}
+	
+	public ComboBoxItem(TipoContexto tipoContexto){
+		this(tipoContexto.obtenerValor(), tipoContexto.obtenerTexto());
 	}
 	
 	public int obtenerValor(){
